@@ -4,36 +4,24 @@ package ch02;
 public class Test01 {
     public static void main(String[] args) {
         System.out.println("Hello!");
-        // 1) 정수 78을 출력하라
-        // = 10진수
-        System.out.println(78);
-        // = 2진수
-        System.out.println(Integer.toBinaryString(78));
-        System.out.println(10011);
-        // = 16진수
-        System.out.println(Integer.toHexString(78));
-        System.out.println("4e");
-        // = 8진수
-        System.out.println(Integer.toOctalString(78));
-        System.out.println(116);
-        // 2) 부동소수점을 출력하라.
-        // => 12.345
-        System.out.println(12.345);
-        // 1.2345를 출력할때 12.345 가 나오게 하라
-        System.out.println(1.2345e1);
-        
-        // 참거짓
-        System.out.println(true);
-        System.out.println(false);
-        // 4.문자를 출려가라
-       // => 0x61 값을 출력했을 때 a가 나오게 하라
-        System.out.println((char)0x61);
-
-        // 97 값을 출력했을때 a가 나오게 
-        System.out.println((char)97);
-        // =>작은 따옴 표를 
-        System.out.println('a');
-        
     }
 }
 
+/*
+# 패키지 무소속 클래스
+- 특정 패키지에 소속이 되지 않은 클래스이다.
+- 실행할 때 클래스 이름만 지정하면 된다.
+
+  $ java -cp bin Test01
+
+- Test01 은 비록 ch01 폴더에 있지만 패키지에 소속되지 않은 클래스이다.
+- 패키지에 소속시키려면 명령어를 추가해야 한다.
+
+# 패키지 소속 클래스
+- 특정 패키지에 소속된 클래스이다.
+- 실행할 때 반드시 패키지 이름을 지정해야 한다.
+  $ java -cp bin ch01.Test02
+  
+
+
+*/

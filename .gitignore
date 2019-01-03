@@ -3,10 +3,10 @@ node_modules/
 .vscode/
 .gradle/
 .settings/
-bin/
+.bin/
 build/
 temp/
-doc/
+.doc/
 Debug/
 Release/
 

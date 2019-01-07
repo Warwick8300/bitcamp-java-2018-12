@@ -14,7 +14,7 @@ public class test{
       String postDate = keyboard.next();
       System.out.print("조회 : ");
       int postView = keyboard.nextInt();
-
+      keyboard.close();
         System.out.printf("번호 : %d\n",postNo);
         System.out.printf("내용: %s\n",postContent);
         System.out.printf("작성일 : %s\n",postDate);

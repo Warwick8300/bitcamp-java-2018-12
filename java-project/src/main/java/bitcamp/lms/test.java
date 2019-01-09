@@ -1,6 +1,7 @@
 
 package bitcamp.lms;
 
+
 public class test{
     
     public static void main(String[] args) {
@@ -19,12 +20,14 @@ public class test{
         System.out.printf("내용: %s\n",postContent);
         System.out.printf("작성일 : %s\n",postDate);
         System.out.printf("조회수 : %d\n",postView);
-  
+        
         /*
         System.out.println("번호: "+ 1 +
             "\n내용: 게시글입니다.\n" + 
               "작성일: " +df1.format(c.getTime())+ 
              "\n조회수: "+0);
+             
+             
 */
     }
 }

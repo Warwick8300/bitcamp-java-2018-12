@@ -1,5 +1,4 @@
 package bitcamp.lms;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -8,11 +7,19 @@ public class App2 {
 
 
   public static void main(String[] args) {
-    
+    class Member{
+      int studentNo;  //번호
+      String studentName;  // 이름
+      String studentEmail; // 이메일
+      String studentPassword; //암호
+      String studentPicture;  //사진
+      String studentCellphone; //폰번호
+      Date studentJoinDate; //가입일
+    }
     Scanner keyboard = new Scanner(System.in);
     Date registeredDate = new Date(System.currentTimeMillis()); 
     Member[] member = new Member[1000];
-  
+    String str; // 계속입력할건가 말껀가
     int id = 0;
     end:
       while(true)
@@ -35,27 +42,25 @@ public class App2 {
         re:
           while(true)
           {
-            String input; // 계속입력할건가 말껀가
             System.out.print("계속 입력하실? (y/n) : ");
-            input = keyboard.nextLine();
-            if(input.equalsIgnoreCase("y") | input.equals("")) 
+            str = keyboard.next();
+            if(str.equalsIgnoreCase("y")) 
               break re;
-            else if (input.equalsIgnoreCase("n"))
+            else if (str.equalsIgnoreCase("n"))
               break end;
             else
               System.out.println("다시입력하세요");
           }
       }
     keyboard.close();
-    SimpleDateFormat today = new SimpleDateFormat("yyyy/MM/dd");
     System.out.println("=================================");
     int num=0;
     while (num < id) {
       System.out.printf("번호 : %d ", member[num].studentNo);
       System.out.printf("이름 : %s", member[num].studentName);
-      System.out.printf("이메일 : %s ", member[num].studentEmail);
-      System.out.printf("전화 : %s ", member[num].studentCellphone);
-      System.out.printf("가입일 : %s\n", today.format(member[num].studentJoinDate));
+      System.out.printf("이메일 : %s", member[num].studentEmail);
+      System.out.printf("전화 : %s", member[num].studentCellphone);
+      System.out.printf("가입일 : %s\n", member[num].studentJoinDate);
       System.out.println("=================================");
       num++;   
     }

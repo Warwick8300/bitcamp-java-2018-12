@@ -37,7 +37,6 @@ public class Test08 {
     
     System.out.println(scores[0].name);
     System.out.println(scores[0].kor);
-    String s= "gg";
     
 
   }

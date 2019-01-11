@@ -9,28 +9,28 @@ public class App {
     Scanner keyboard = new Scanner(System.in);
     Lesson[] lesson = new Lesson[1000];
     
-    int id = 0;
+    int index = 0;
     end:
-    while(id < 1000 )
+    while(index < 1000 )
     { 
-      lesson[id] = new Lesson();
+      lesson[index] = new Lesson();
       System.out.print("번호 입력 : ");
-      lesson[id].classNo = keyboard.nextInt();
+      lesson[index].classNo = keyboard.nextInt();
       keyboard.nextLine();
       System.out.print("수업명 : ");
-      lesson[id].className = keyboard.nextLine();
+      lesson[index].className = keyboard.nextLine();
       System.out.print("설명 : ");
-      lesson[id].classExplanation = keyboard.nextLine();
+      lesson[index].classExplanation = keyboard.nextLine();
       System.out.print("시작일 : ");
-      lesson[id].classStartDate = keyboard.nextLine();
+      lesson[index].classStartDate = keyboard.nextLine();
       System.out.print("종료일 : ");
-      lesson[id].classEndDate = keyboard.nextLine();
+      lesson[index].classEndDate = keyboard.nextLine();
       System.out.print("총수업시간: ");
-      lesson[id].classTime = keyboard.nextInt();
+      lesson[index].classTime = keyboard.nextInt();
       System.out.print("일수업시간 : ");
-      lesson[id].classHour = keyboard.nextInt();
+      lesson[index].classHour = keyboard.nextInt();
       keyboard.nextLine();
-      id++;
+      index++;
       re:
       while(true)
       {
@@ -49,9 +49,9 @@ public class App {
     keyboard.close();
     System.out.println("=================================");
     int num=0;
-    while (num < id) {
-      System.out.printf("번호 : %d ",lesson[num].classNo);
-      System.out.printf("수업명: %s ",lesson[num].className);
+    while (num < index) {
+      System.out.printf("번호 : %3d ",lesson[num].classNo);
+      System.out.printf("수업명: %-15s ",lesson[num].className);
       System.out.printf("시작일 : %s ~",lesson[num].classStartDate);
       System.out.printf(" %s ",lesson[num].classEndDate);
       System.out.printf("총수업시간: %d\n",lesson[num].classTime);

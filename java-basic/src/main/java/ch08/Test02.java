@@ -14,7 +14,7 @@ public class Test02 {
 
   public static void main(String[] args) {
 
-    
+    My2.manager = "화가";
 
   }
 }

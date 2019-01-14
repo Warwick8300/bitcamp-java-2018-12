@@ -10,4 +10,5 @@ public class Lesson {
   public Date endDate;
   public int totalHours;
   public int dayHours;
+
 }

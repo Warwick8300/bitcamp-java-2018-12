@@ -6,11 +6,15 @@ import com.eomcs.lms.domain.Lesson;
 
 public class LessonHandler {
   
-  public static Scanner keyboard;
-   final int LENGTH = 10;
+  public  Scanner keyboard;
+  static final int LENGTH = 10;
    Lesson[] lessons = new Lesson[LENGTH];
    int lessonIdx = 0;
   
+  public LessonHandler(Scanner key) {
+    this.keyboard =key;
+  }
+
   public   void listLesson() {
     for (int j = 0; j < this.lessonIdx; j++) {
       System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 

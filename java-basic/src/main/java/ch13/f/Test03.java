@@ -1,13 +1,16 @@
 package ch13.f;
-//상속 관계에서 생성자 호출 과정 2 임의의 수퍼 클래스 호출
-public class Test03 {
+/*
+// 바자는 다중 상속을 허락하지 않는다.
+//public class Test03 extends A,X{
 
-  public static void main(String[] args) {
+  //public static void main(String[] args) {
+    
+    
     Y obj = new Y();
-  
-    obj.m1();
-    obj.m2();
+    
+    obj.m1(); // 어떤 m1() 호출해야 하는가 
     
   }
 
 }
+*/

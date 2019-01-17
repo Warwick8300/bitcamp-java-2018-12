@@ -1,5 +1,4 @@
 package com.eomcs.lms.domain;
-
 import java.sql.Date;
 
 public class Board {
@@ -7,17 +6,12 @@ public class Board {
   private String contents;
   private Date createdDate;
   private int viewCount;
-  public int getViewCount() {
-    return viewCount;
+  
+  public int getNo() {
+    return no;
   }
-  public void setViewCount(int viewCount) {
-    this.viewCount = viewCount;
-  }
-  public Date getCreatedDate() {
-    return createdDate;
-  }
-  public void setCreatedDate(Date createdDate) {
-    this.createdDate = createdDate;
+  public void setNo(int no) {
+    this.no = no;
   }
   public String getContents() {
     return contents;
@@ -25,10 +19,18 @@ public class Board {
   public void setContents(String contents) {
     this.contents = contents;
   }
-  public int getNo() {
-    return no;
+  public Date getCreatedDate() {
+    return createdDate;
   }
-  public void setNo(int no) {
-    this.no = no;
+  public void setCreatedDate(Date createdDate) {
+    this.createdDate = createdDate;
   }
+  public int getViewCount() {
+    return viewCount;
+  }
+  public void setViewCount(int viewCount) {
+    this.viewCount = viewCount;
+  }
+  
+  
 }

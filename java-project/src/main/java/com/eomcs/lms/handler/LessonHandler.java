@@ -6,10 +6,10 @@ import com.eomcs.lms.domain.Lesson;
 
 public class LessonHandler {
   
-  public  Scanner keyboard;
   static final int LENGTH = 10;
-   Lesson[] lessons = new Lesson[LENGTH];
-   int lessonIdx = 0;
+  private Scanner keyboard;
+  private Lesson[] lessons = new Lesson[LENGTH];
+  private int lessonIdx = 0;
   
   public LessonHandler(Scanner key) {
     this.keyboard =key;
@@ -18,8 +18,8 @@ public class LessonHandler {
   public   void listLesson() {
     for (int j = 0; j < this.lessonIdx; j++) {
       System.out.printf("%3d, %-15s, %10s ~ %10s, %4d\n", 
-          this.lessons[j].no, this.lessons[j].title, this.lessons[j].startDate, 
-          this.lessons[j].endDate, this.lessons[j].totalHours);
+          this.lessons[j].getNo(), this.lessons[j].getTitle(), this.lessons[j].getStartDate(), 
+          this.lessons[j].getEndDate(), this.lessons[j].getTotalHours());
     }
   }
 
@@ -27,25 +27,25 @@ public class LessonHandler {
     Lesson lesson = new Lesson();
 
     System.out.print("번호? ");
-    lesson.no = Integer.parseInt(keyboard.nextLine());
+    lesson.setNo(Integer.parseInt(keyboard.nextLine()));
 
     System.out.print("수업명? ");
-    lesson.title = keyboard.nextLine();
+    lesson.setTitle(keyboard.nextLine());
 
     System.out.print("설명? ");
-    lesson.contents = keyboard.nextLine();
+    lesson.setContents(keyboard.nextLine());
 
     System.out.print("시작일? ");
-    lesson.startDate = Date.valueOf(keyboard.nextLine());
+    lesson.setStartDate(Date.valueOf(keyboard.nextLine()));
 
     System.out.print("종료일? ");
-    lesson.endDate = Date.valueOf(keyboard.nextLine());
+    lesson.setEndDate(Date.valueOf(keyboard.nextLine()));
 
     System.out.print("총수업시간? ");
-    lesson.totalHours = Integer.parseInt(keyboard.nextLine());
+    lesson.setTotalHours(Integer.parseInt(keyboard.nextLine()));
 
     System.out.print("일수업시간? ");
-    lesson.dayHours = Integer.parseInt(keyboard.nextLine());
+    lesson.setDayHours(Integer.parseInt(keyboard.nextLine()));
 
     // i 번째 배열에 수업 정보를 담고 있는 Lesson 객체(의 주소)를 보관한다.
     this.lessons[this.lessonIdx] = lesson;

@@ -11,8 +11,18 @@ public class Test05 {
     String s2 = s1.replace('l', 'x');
   String s3 = s1.replace("ll", "dd");
   System.out.println(s1);
-  s1 = "hoho";
+  System.out.println(s1.hashCode());
+  System.out.println(s2.hashCode());
 
+
+  String s5 = "hoho";
+  System.out.println(s5.hashCode());
+
+  s1 = "hoho";
+  System.out.println(s1.hashCode());
+  
+if (s5 == s1)
+  System.out.println("dd");
   System.out.println(s1);
   System.out.println(s2);
 System.out.println(s3);

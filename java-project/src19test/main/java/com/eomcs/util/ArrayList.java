@@ -1,4 +1,4 @@
-package com.eomcs.lms.handler;
+package com.eomcs.util;
 
 import java.util.Arrays;
 import com.eomcs.lms.domain.Board;

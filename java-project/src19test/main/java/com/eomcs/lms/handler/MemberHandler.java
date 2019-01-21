@@ -1,6 +1,7 @@
 package com.eomcs.lms.handler;
 import java.sql.Date;
 import java.util.Scanner;
+import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.Member;
 import com.eomcs.util.ArrayList;
 
@@ -16,8 +17,8 @@ public class MemberHandler {
   
   public void listMember() {
     Member[] members = list.toArray(new Member[0]);
-    
     for (Member member : members) {
+      
       System.out.printf("%3d, %-4s, %-20s, %-15s, %s\n", 
           member.getNo(), member.getName(), 
           member.getEmail(), member.getTel(), member.getRegisteredDate());
@@ -53,12 +54,3 @@ public class MemberHandler {
   }
 
 }
-
-
-
-
-
-
-
-
-

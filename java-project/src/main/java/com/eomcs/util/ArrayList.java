@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class ArrayList<E> {
   
-  static final int DEFAULT_CAPACITY = 10;
+  static final int DEFAULT_CAPACITY = 5;
   Object[] list;
   int size = 0;
 

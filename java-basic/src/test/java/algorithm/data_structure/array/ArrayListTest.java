@@ -1,4 +1,4 @@
-package algofithm.data_structure.array;
+package algorithm.data_structure.array;
 
 import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertEquals;

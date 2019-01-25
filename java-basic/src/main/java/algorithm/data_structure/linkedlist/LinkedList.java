@@ -79,19 +79,22 @@ public class LinkedList {
     for(int i = 1; i <= index ;i++) {
       cursor = cursor.next;
     }
+    
     node.next = cursor;
     node.prev =cursor.prev;
+   //새노드가 찾은 노드를 가리키게 한다.
+    cursor.prev = node;
     if(node.prev != null)
       node.prev.next =node;
      
     else {
       head = node;
     }
-    cursor.prev = node;
+    
     //
     size++;
 
-    //새노드가 찾은 노드를 가리키게 한다.
+ 
     return 0;
   }
   public Object remove(int index) {

@@ -2,7 +2,8 @@
 package ch18.c;
 
 // 한 클래스가 여러 규칙에 따라 동작하도록 정의할 수 있는데
-// 불가능한 경우가 있다.
+// 불가능한 경우가 있다
+/*
 // 규칙에 중복되는 메서드 중에 리턴값은 다르고 기타 시그너처는 같은 메서드가 있을 때 불가능하다.
 public class Tool2 implements ProtocolA, ProtocolC {
   
@@ -34,7 +35,7 @@ public class Tool2 implements ProtocolA, ProtocolC {
   
   
 }
-
+*/
 
 
 

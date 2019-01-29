@@ -75,7 +75,7 @@ public class LinkedList<E> {
     return (E[]) arr;
   }
   //값을 삽입하는 경우는 arraylist방식 보다 효율적이다
-  public int insert(int index, E value) {
+   public int insert(int index, E value) {
     if(index < 0 || index >= size)
       return -1;
     Node<E> node = new Node<>(value);
@@ -95,7 +95,7 @@ public class LinkedList<E> {
       head = node;
     }
 
-    //
+    
     size++;
 
 

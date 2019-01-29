@@ -57,7 +57,7 @@ public class App {
     commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberList));
     commandMap.put("/member/update", new MemberUpdateCommand(keyboard, memberList));
     commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberList));
-    
+
     while (true) {
       String command = prompt();
 
@@ -66,8 +66,16 @@ public class App {
 
       // 사용자가 입력한 명령을 큐에 보관한다.
       commandHistory2.offer(command);
+      Command commandHandler = commandMap.get(command);
+      if(commandHandler ==null) {
+        try {
+          commandHandler.execute();
+        } catch (Exception e) {
+          System.out.printf("작업중 올 발생 %s\n",e.toString());   
 
-      if (command.equals("quit")) {
+        }
+      }
+      else if (command.equals("quit")) {
         System.out.println("안녕!");
         break;
 
@@ -91,19 +99,15 @@ public class App {
       } else if (command.equals("history2")) {
         printCommandHistory(commandHistory2.iterator());
 
-      } else {
-        Command commandHandler = commandMap.get(command);
-        if(commandHandler ==null)
-          System.out.println("실행할 수 없는 명령입니다.");
-        else 
-          commandHandler.execute();
       }
-
-      System.out.println(); 
     }
 
+    System.out.println(); 
     keyboard.close();
   }
+
+
+
 
   private static void printCommandHistory(Iterator<String> iterator) {
     int count = 0;

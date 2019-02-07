@@ -1,7 +1,12 @@
 package com.eomcs.lms.domain;
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Board implements Cloneable {
+public class Board implements Cloneable , Serializable {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   private int no;
   private String contents;
   private Date createdDate;
@@ -35,18 +40,6 @@ public class Board implements Cloneable {
   }
   public void setViewCount(int viewCount) {
     this.viewCount = viewCount;
-  }
-
-  public static Board vlaueOf(String csv) {
-    String [] values = csv.split(",");
-    Board board = new Board();
-    board.setNo(Integer.parseInt(values[0]));
-    board.setContents(values[1]);
-    board.setCreatedDate(Date.valueOf(values[2]));
-    board.setViewCount(Integer.parseInt(values[3]));
-   
- 
-    return board;
   }
   
   

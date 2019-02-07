@@ -21,11 +21,12 @@ public class Test01_2 {
     BufferedInputStream in1 = new BufferedInputStream(in);
     DataInputStream in2 = new DataInputStream(in1)){
       
-     String name = in2.readUTF();
-      int age = in2.readShort();
-
-      System.out.printf("%s %d ",name,age);
-
+     s1 = new Score(in2.readUTF(),in2.readInt(),in2.readInt(),in2.readInt());
+      System.out.println(s1.toString());
+     /*
+      System.out.println(s1.getSum());
+      System.out.println(s1.getAver());
+      */
     }catch (Exception e) {
       e.printStackTrace();
 

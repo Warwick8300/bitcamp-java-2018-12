@@ -2,9 +2,10 @@
 package ch22.e;
 
 import java.io.DataOutputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import ch22.c.BufferdOutputStream;
 
 public class Test01_1 {
@@ -20,14 +21,22 @@ public class Test01_1 {
     Score s3 = new Score("유관순", 80, 80, 80);
 
 
-    try(FileOutputStream out = new FileOutputStream("score.data") ;
+    try(FileOutputStream out = new FileOutputStream("score.data");
         BufferdOutputStream out1 = new BufferdOutputStream(out);
-        DataOutputStream out2 = new DataOutputStream(out1)){{
+           DataOutputStream out2 = new DataOutputStream(out1)){{
           
-          
+             out2.writeUTF(s1.getName());
+             out2.writeInt(s1.getKor());
+             out2.writeInt(s1.getEng());
+             out2.writeInt(s1.getMath());
+             /*
           out2.writeUTF(s1.toString());
           out2.writeUTF(s2.toString());
           out2.writeUTF(s3.toString());
+          */
+          
+          out2.flush();
+       
 
         }
 

@@ -1,6 +1,14 @@
 package ch22.e;
 
-public class Score {
+import java.io.Serializable;
+
+//ObjectInputStream ObjectOutputStream 을 통해 인ㅅ턴스의 
+//바이트 배열로 자동으로 변환하여 출력하려면 
+//Serailziable 인터페이스는 메서드가 선언되어 있지 않다 .
+// 단지 해당 클래스의 인스턴스가 바이트 배열로 자동으로 출력될수 잇는지 
+
+
+public class Score implements Serializable {
   private String name;
   private int kor;
   private int eng;
@@ -9,6 +17,7 @@ public class Score {
   private float aver;
   
   public Score() {
+    System.out.println("Score()");
   }
   
   public Score(String name, int kor, int eng, int math) {
@@ -68,7 +77,7 @@ public class Score {
     return aver;
   }
   
-  private void compute() {
+  public void compute() {
     this.sum = this.kor + this.eng + this.math;
     this.aver = this.sum / 3f;
   }

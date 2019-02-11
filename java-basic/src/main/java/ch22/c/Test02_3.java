@@ -11,7 +11,7 @@ public class Test02_3 {
        
     
     try (    FileOutputStream out =new FileOutputStream("data.bin");
-        BufferdOutputStream out2 = new BufferdOutputStream(out);) {
+        BufferedOutputStream out2 = new BufferedOutputStream(out);) {
           System.out.println("데이터쓰중");
           long start = System.currentTimeMillis();
           for(int i = 0; i< 1000000; i++) {

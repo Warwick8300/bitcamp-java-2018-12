@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import ch22.c.BufferdOutputStream;
+import ch22.c.BufferedOutputStream;
 
 public class Test02_1 {
 
@@ -24,7 +24,7 @@ public class Test02_1 {
 
 
     try(FileOutputStream out = new FileOutputStream("score.data");
-        BufferdOutputStream out1 = new BufferdOutputStream(out);
+        BufferedOutputStream out1 = new BufferedOutputStream(out);
            DataOutputStream out2 = new DataOutputStream(out1)){{
           
          out2.writeInt(students.length);

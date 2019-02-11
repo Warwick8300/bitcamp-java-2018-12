@@ -5,7 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import ch22.c.BufferdOutputStream;
+import ch22.c.BufferedOutputStream;
 
 public class Test04_1 {
 
@@ -26,7 +26,7 @@ public class Test04_1 {
     //인스턴스를 바이트 배열로 만들어 출력ㅎ는 기능이 있다.
     //단 java.io.serializable 
     try(FileOutputStream out = new FileOutputStream("score.data");
-        BufferdOutputStream out1 = new BufferdOutputStream(out);
+        BufferedOutputStream out1 = new BufferedOutputStream(out);
            ObjectOutputStream out2 = new ObjectOutputStream(out1)){{
           
          out2.writeInt(students.size());

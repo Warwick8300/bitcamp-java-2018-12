@@ -8,7 +8,7 @@ public class Test03_3 {
 
   public static void main(String[] args) {
     try ( FileOutputStream out = new FileOutputStream("data.bin") ;
-        BufferdOutputStream out1 = new BufferdOutputStream(out);
+        BufferedOutputStream out1 = new BufferedOutputStream(out);
     DataOutputStream out2 = new DataOutputStream(out1)){
       int no = 200;
       String name = "ABC가각간갇갈";

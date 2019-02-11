@@ -3,12 +3,12 @@ package ch22.c;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class BufferdOutputStream extends OutputStream {
+public class BufferedOutputStream extends OutputStream {
 
   OutputStream out;
   byte[] buf = new byte[1024];
   int size = 0;
-  public BufferdOutputStream(OutputStream out) {
+  public BufferedOutputStream(OutputStream out) {
     this.out = out;
   }
 

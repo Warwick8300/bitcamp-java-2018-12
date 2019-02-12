@@ -8,7 +8,7 @@ import java.net.Socket;
 import java.util.Scanner;
 
 
-public class CalculatorClient {
+public class CalculatorClient1 {
   public static void main(String[] args) {
     Scanner keyboard = new Scanner(System.in);
     String cookie = null;

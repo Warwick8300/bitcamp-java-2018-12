@@ -9,7 +9,7 @@ public class LessonAddCommand implements Command {
   Scanner keyboard;
   List<Lesson> list;
 
-  public LessonAddCommand(Scanner keyboard, List<Lesson> list) {
+  public LessonAddCommand(Scanner keyboard) {
     this.keyboard = keyboard;
     this.list = list;
   }

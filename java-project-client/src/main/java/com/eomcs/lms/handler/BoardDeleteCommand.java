@@ -8,9 +8,9 @@ public class BoardDeleteCommand implements Command {
   Scanner keyboard;
   List<Board> list;
   
-  public BoardDeleteCommand(Scanner keyboard, List<Board> list) {
+  public BoardDeleteCommand(Scanner keyboard) {
     this.keyboard = keyboard;
-    this.list = list;
+    
   }
 
   @Override

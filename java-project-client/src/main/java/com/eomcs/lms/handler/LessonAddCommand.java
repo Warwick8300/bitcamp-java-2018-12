@@ -1,17 +1,17 @@
 package com.eomcs.lms.handler;
 import java.sql.Date;
-import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.agent.LessonAgent;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonAddCommand implements Command {
 
   Scanner keyboard;
-  List<Lesson> list;
+  LessonAgent lessonAgent;
 
-  public LessonAddCommand(Scanner keyboard) {
+  public LessonAddCommand(Scanner keyboard, LessonAgent lessonAgent) {
     this.keyboard = keyboard;
-    this.list = list;
+    this.lessonAgent = lessonAgent;
   }
 
   @Override
@@ -38,10 +38,16 @@ public class LessonAddCommand implements Command {
 
     System.out.print("일수업시간? ");
     lesson.setDayHours(Integer.parseInt(keyboard.nextLine()));
+    try {
+      lessonAgent.add(lesson);
+        System.out.println("수업정보 추가 성공!");
 
-    list.add(lesson);
+    }catch(Exception e) {
+      System.out.printf("수업정보 저장 오류! : %s\n", e.getMessage());
 
-    System.out.println("저장하였습니다.");
+
+
+    }
   }
   
 }

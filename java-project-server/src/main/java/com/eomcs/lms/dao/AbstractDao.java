@@ -1,5 +1,4 @@
-// 10단계: 데이터를 파일로 관리한다.
-package com.eomcs.lms.service;
+package com.eomcs.lms.dao;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -10,22 +9,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class AbstractService<E> {
+public abstract class AbstractDao<E> {
 
-  List<E> list;
+  protected List<E> list;
 
-  ObjectInputStream in;
-  ObjectOutputStream out;
-  String filepath;
+  protected String filepath;
 
-  public void init(ObjectInputStream in, ObjectOutputStream out) {
-    this.in = in;
-    this.out = out;
-  }
+
   
   @SuppressWarnings("unchecked")
-  public void loadData(String filepath) {
-    this.filepath = filepath;
+  public void loadData() {
+  
     
     try (ObjectInputStream in = new ObjectInputStream(
         new BufferedInputStream(
@@ -51,8 +45,7 @@ public abstract class AbstractService<E> {
     }
   }
   
-  public abstract void execute(String request) throws Exception; 
-
+ 
 
 
 

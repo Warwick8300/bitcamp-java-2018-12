@@ -1,45 +1,55 @@
 package com.eomcs.lms.handler;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Date;
-import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.agent.BoardAgent;
+import com.eomcs.lms.agent.MemberAgent;
 import com.eomcs.lms.domain.Member;
 
 public class MemberAddCommand implements Command {
-  
+
   Scanner keyboard;
-  List<Member> list;
-  
-  public MemberAddCommand(Scanner keyboard, List<Member> list) {
+  MemberAgent memberAgent;
+
+  public MemberAddCommand(Scanner keyboard, MemberAgent memberAgent) {
     this.keyboard = keyboard;
-    this.list = list;
+    this.memberAgent = memberAgent;
   }
   
+
   @Override
   public void execute() {
     Member member = new Member();
-    
+
     System.out.print("번호? ");
     member.setNo(Integer.parseInt(keyboard.nextLine()));
-    
+
     System.out.print("이름? ");
     member.setName(keyboard.nextLine());
-    
+
     System.out.print("이메일? ");
     member.setEmail(keyboard.nextLine());
-    
+
     System.out.print("암호? ");
     member.setPassword(keyboard.nextLine());
-  
+
     System.out.print("사진? ");
     member.setPhoto(keyboard.nextLine());
-  
+
     System.out.print("전화? ");
     member.setTel(keyboard.nextLine());
-  
+
     member.setRegisteredDate(new Date(System.currentTimeMillis())); 
-    
-    list.add(member);
-    
-    System.out.println("저장하였습니다.");
+
+    try {
+      memberAgent.add(member);
+      System.out.println("회원 추가 성공!");
+
+    }catch(Exception e) {
+      System.out.printf("회원데이터 저장 오류! : %s\n", e.getMessage());
+
+
+    }
   }
 }

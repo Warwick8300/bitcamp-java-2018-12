@@ -1,4 +1,3 @@
-// 10단계: 데이터를 파일로 관리한다.
 package com.eomcs.lms.service;
 
 import java.io.ObjectInputStream;
@@ -8,29 +7,30 @@ import com.eomcs.lms.domain.Board;
 
 public class BoardService implements Service {
 
-
-  //boardService가 작업을 수행할떄 사용할 객체 (의존객체 dependuny
+  // BoardService가 작업을 수행할 때 사용할 객체(의존 객체; dependency)
   BoardDao boardDao;
+  
   public BoardService(BoardDao boardDao) {
     this.boardDao = boardDao;
   }
-  public void execute(String request,ObjectInputStream in, ObjectOutputStream out) throws Exception {
-
+  
+  public void execute(String request, ObjectInputStream in, ObjectOutputStream out) throws Exception {
+    
     switch (request) {
       case "/board/add":
-        add(in,out);
+        add(in, out);
         break;
       case "/board/list":
-        list(in,out);
+        list(in, out);
         break;
       case "/board/detail":
-        detail(in,out);
+        detail(in, out);
         break;
       case "/board/update":
-        update(in,out);
+        update(in, out);
         break;
       case "/board/delete":
-        delete(in,out);
+        delete(in, out);
         break;  
       default:
         out.writeUTF("FAIL");
@@ -56,45 +56,44 @@ public class BoardService implements Service {
     out.writeUTF("OK");
     out.flush();
     int no = in.readInt();
-    Board b = boardDao.findByNo(no);
-    if(b== null) {
+
+    Board obj = boardDao.findByNo(no);
+    if (obj == null) { 
       out.writeUTF("FAIL");
       return;
     }
-    out.writeUTF("OK");
-    out.writeObject(b);
-  }
 
+    out.writeUTF("OK");
+    out.writeObject(obj);
+  }
 
   private void update(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     Board board = (Board) in.readObject();
-    if(boardDao.update(board)==0) {
+
+    if (boardDao.update(board) == 0) {
       out.writeUTF("FAIL");
       return;
-      }
-
-      out.writeUTF("OK");
-
     }
-
-
-
-    private void delete(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-      out.writeUTF("OK");
-      out.flush();
-      int no = in.readInt();
-      if(boardDao.delete(no)==0) {
-          out.writeUTF("FAIL");
-          return;
-        }
-     
-
-      out.writeUTF("OK");    
-    }
-
+    
+    out.writeUTF("OK");
   }
+
+  private void delete(ObjectInputStream in, ObjectOutputStream out) throws Exception {
+    out.writeUTF("OK");
+    out.flush();
+    int no = in.readInt();
+
+    if (boardDao.delete(no) == 0) {
+      out.writeUTF("FAIL");    
+      return;
+    }
+    
+    out.writeUTF("OK");
+  }
+
+}
 
 
 

@@ -8,11 +8,12 @@ public class LessonAddCommand implements Command {
 
   Scanner keyboard;
   LessonAgent lessonAgent;
-
+  
   public LessonAddCommand(Scanner keyboard, LessonAgent lessonAgent) {
     this.keyboard = keyboard;
     this.lessonAgent = lessonAgent;
   }
+  
 
   @Override
   public void execute() {
@@ -38,15 +39,13 @@ public class LessonAddCommand implements Command {
 
     System.out.print("일수업시간? ");
     lesson.setDayHours(Integer.parseInt(keyboard.nextLine()));
+
     try {
       lessonAgent.add(lesson);
-        System.out.println("수업정보 추가 성공!");
-
-    }catch(Exception e) {
-      System.out.printf("수업정보 저장 오류! : %s\n", e.getMessage());
-
-
-
+      System.out.println("저장하였습니다.");
+      
+    } catch (Exception e) {
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
   }
   

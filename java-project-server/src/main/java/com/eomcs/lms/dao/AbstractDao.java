@@ -12,15 +12,10 @@ import java.util.List;
 public abstract class AbstractDao<E> {
 
   protected List<E> list;
-
   protected String filepath;
 
-
-  
   @SuppressWarnings("unchecked")
   public void loadData() {
-  
-    
     try (ObjectInputStream in = new ObjectInputStream(
         new BufferedInputStream(
             new FileInputStream(this.filepath)))) {
@@ -44,11 +39,6 @@ public abstract class AbstractDao<E> {
       throw new Exception("데이터 파일 저장 오류!", e);
     }
   }
-  
- 
-
-
-
 }
 
 

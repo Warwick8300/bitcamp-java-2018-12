@@ -1,4 +1,3 @@
-// 10단계: 데이터를 파일로 관리한다.
 package com.eomcs.lms.service;
 
 import java.io.ObjectInputStream;
@@ -8,29 +7,29 @@ import com.eomcs.lms.domain.Member;
 
 public class MemberService implements Service {
 
-
-  //memberService가 작업을 수행할떄 사용할 객체 (의존객체 dependuny
   MemberDao memberDao;
+  
   public MemberService(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
-  public void execute(String request,ObjectInputStream in, ObjectOutputStream out) throws Exception {
+  
+  public void execute(String request, ObjectInputStream in, ObjectOutputStream out) throws Exception {
 
     switch (request) {
       case "/member/add":
-        add(in,out);
+        add(in, out);
         break;
       case "/member/list":
-        list(in,out);
+        list(in, out);
         break;
       case "/member/detail":
-        detail(in,out);
+        detail(in, out);
         break;
       case "/member/update":
-        update(in,out);
+        update(in, out);
         break;
       case "/member/delete":
-        delete(in,out);
+        delete(in, out);
         break;  
       default:
         out.writeUTF("FAIL");
@@ -56,45 +55,44 @@ public class MemberService implements Service {
     out.writeUTF("OK");
     out.flush();
     int no = in.readInt();
-    Member b = memberDao.findByNo(no);
-    if(b== null) {
+
+    Member obj = memberDao.findByNo(no);
+    if (obj == null) { 
       out.writeUTF("FAIL");
       return;
     }
-    out.writeUTF("OK");
-    out.writeObject(b);
-  }
 
+    out.writeUTF("OK");
+    out.writeObject(obj);
+  }
 
   private void update(ObjectInputStream in, ObjectOutputStream out) throws Exception {
     out.writeUTF("OK");
     out.flush();
     Member member = (Member) in.readObject();
-    if(memberDao.update(member)==0) {
+
+    if (memberDao.update(member) == 0) {
       out.writeUTF("FAIL");
       return;
-      }
-
-      out.writeUTF("OK");
-
     }
-
-
-
-    private void delete(ObjectInputStream in, ObjectOutputStream out) throws Exception {
-      out.writeUTF("OK");
-      out.flush();
-      int no = in.readInt();
-      if(memberDao.delete(no)==0) {
-          out.writeUTF("FAIL");
-          return;
-        }
-     
-
-      out.writeUTF("OK");    
-    }
-
+    
+    out.writeUTF("OK");
   }
+
+  private void delete(ObjectInputStream in, ObjectOutputStream out) throws Exception {
+    out.writeUTF("OK");
+    out.flush();
+    int no = in.readInt();
+
+    if (memberDao.delete(no) == 0) {
+      out.writeUTF("FAIL");    
+      return;
+    }
+    
+    out.writeUTF("OK");
+  }
+
+}
 
 
 

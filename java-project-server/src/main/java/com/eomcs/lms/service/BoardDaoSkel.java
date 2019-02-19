@@ -21,6 +21,7 @@ public class BoardDaoSkel implements Service {
         add(in, out);
         break;
       case "/board/list":
+     
         list(in, out);
         break;
       case "/board/detail":

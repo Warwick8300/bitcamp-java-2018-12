@@ -1,0 +1,21 @@
+package ch24.d;
+
+public class Account {
+  double balance;
+  String name;
+  
+  public Account(String name, double balance) {
+  this.name = name;
+  this.balance = balance;
+  }
+
+  synchronized public double withdraw(double money) {
+    double temp = this.balance;
+    if(temp -money <0)
+      return 0;
+    temp = temp  - money;
+    this.balance = temp;
+    return money;
+  }
+
+}

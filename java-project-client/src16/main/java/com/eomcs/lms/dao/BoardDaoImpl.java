@@ -1,10 +1,11 @@
 package com.eomcs.lms.dao;
 
+// DBMS 적용
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import com.eomcs.lms.domain.Board;
 
@@ -15,27 +16,26 @@ public class BoardDaoImpl implements BoardDao {
 
   }
 
- 
+
   public List<Board> findAll() {
-    List<Board> boards = new LinkedList<Board>();
-
-
+    List<Board> list = new ArrayList<Board>();
     try (Connection con = DriverManager
         .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS 연결 성공");
+
 
       // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-      try (PreparedStatement stmt = con.prepareStatement("select * from t_board")) {
+      try (PreparedStatement stmt = con.prepareStatement(
+          "select board_id,conts,cdt, vw_cnt from lms_board order by board_id desc")) {
         try (ResultSet rs = stmt.executeQuery()) {
           while (rs.next()) {
             Board board = new Board();
             board.setNo(rs.getInt("board_id"));
-            board.setContents(rs.getString("contents"));
-            board.setCreatedDate(rs.getDate("created_date"));
-            board.setViewCount(rs.getInt("view_count"));
-            boards.add(board);
+            board.setContents(rs.getString("conts"));
+            board.setCreatedDate(rs.getDate("cdt"));
+            board.setViewCount(rs.getInt("vw_cnt"));
+            list.add(board);
           }
-
+          return list;
         }
       }
     } catch (Exception e) {
@@ -43,23 +43,19 @@ public class BoardDaoImpl implements BoardDao {
     }
 
 
-    return (List<Board>) boards;
 
   }
 
   public void insert(Board board) {
     try (Connection con = DriverManager
         .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS 연결 성공");
+
 
       // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
       try (PreparedStatement stmt =
-          con.prepareStatement("insert into t_board( board_id, contents,created_date,view_count)"
-              + " values(?,?,?,?)")) {
-        stmt.setInt(1, board.getNo());
-        stmt.setString(2, board.getContents());
-        stmt.setDate(3, board.getCreatedDate());
-        stmt.setInt(4, board.getViewCount());
+          con.prepareStatement("insert into lms_board(conts)" + " values(?)")) {
+
+        stmt.setString(1, board.getContents());
         stmt.executeUpdate();
 
       }
@@ -73,47 +69,56 @@ public class BoardDaoImpl implements BoardDao {
     Board board = new Board();
     try (Connection con = DriverManager
         .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS 연결 성공");
+
+      try (PreparedStatement stmt =
+          con.prepareStatement("update lms_board set vw_cnt = vw_cnt + 1 where board_id = ?")) {
+        stmt.setInt(1, no);
+        stmt.executeUpdate();
+      }
 
       // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
       try (PreparedStatement stmt =
-          con.prepareStatement("select * from t_board where board_id = " + no)) {
+          con.prepareStatement("select * from lms_board where board_id = ?")) {
+
+        stmt.setInt(1, no);
+
         try (ResultSet rs = stmt.executeQuery()) {
           if (rs.next()) {
             board.setNo(rs.getInt("board_id"));
-            board.setContents(rs.getString("contents"));
-            board.setCreatedDate(rs.getDate("created_date"));
-            board.setViewCount(rs.getInt("view_count"));
+            board.setContents(rs.getString("conts"));
+            board.setCreatedDate(rs.getDate("cdt"));
+            board.setViewCount(rs.getInt("vw_cnt"));
+            return board;
+          } else {
 
-          } else
-            System.out.println("해당번호의 게시물이 존재하지 않습니다.");
+            return null;
+          }
 
         }
 
 
       }
-    } catch (Exception e) {
+    } catch (
+
+    Exception e) {
       throw new RuntimeException(e);
     }
-    return board;
+
 
   }
 
   public int update(Board board) {
     try (Connection con = DriverManager
         .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS 연결 성공");
+
 
       // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
       try (PreparedStatement stmt = con.prepareStatement(
-          "update t_board set contents = ?, created_date = ?, view_count = ? where board_id = ?"
-              )) {
+          "update lms_board set conts = ? where board_id = ?")) {
         stmt.setString(1, board.getContents());
-        stmt.setDate(2, board.getCreatedDate());
-        stmt.setInt(3, board.getViewCount());
-        stmt.setInt(4, board.getNo());
-        stmt.executeUpdate();
-        return 1;
+        stmt.setInt(2, board.getNo());
+        
+        return stmt.executeUpdate();
 
       }
     } catch (Exception e) {
@@ -126,25 +131,21 @@ public class BoardDaoImpl implements BoardDao {
 
     try (Connection con = DriverManager
         .getConnection("jdbc:mariadb://localhost/bitcampdb?user=bitcamp&password=1111")) {
-      System.out.println("DBMS 연결 성공");
+ 
 
-      //PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-      try (PreparedStatement stmt = con.prepareStatement(
-          "delete from t_board where board_id = "+no)) {
-      int count = stmt.executeUpdate();
-     
-           if(count ==0) {
-             System.out.println("해당번호의 게시물이 존재하지 않습니다.");
-             return 1;
-          }
-            
-       return 1;
+      // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
+      try (PreparedStatement stmt =
+          con.prepareStatement("delete from lms_board where board_id = ?")) {
+        
+        stmt.setInt(1, no);
+        return stmt.executeUpdate();
+
       }
-    }catch(Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
-  
+
 }
 
 

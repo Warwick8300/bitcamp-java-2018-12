@@ -1,4 +1,7 @@
-// 15단계 : 여러 클라이언트 요청을 처리할 때의 문제점과 해결책(멀티스레드 적용)
+// 16단계 : DAO에 JDBC적용하기
+// 수업회원게시물 정보를 저장할 테이블을 생성한다
+// impl 클래스에 jdbc 를 적용한다.
+//
 package com.eomcs.lms;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -6,6 +9,9 @@ import java.util.Map;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
+import com.eomcs.lms.dao.BoardDaoImpl;
+import com.eomcs.lms.dao.LessonDaoImpl;
+import com.eomcs.lms.dao.MemberDaoImpl;
 import com.eomcs.lms.handler.BoardAddCommand;
 import com.eomcs.lms.handler.BoardDeleteCommand;
 import com.eomcs.lms.handler.BoardDetailCommand;
@@ -22,9 +28,6 @@ import com.eomcs.lms.handler.MemberDeleteCommand;
 import com.eomcs.lms.handler.MemberDetailCommand;
 import com.eomcs.lms.handler.MemberListCommand;
 import com.eomcs.lms.handler.MemberUpdateCommand;
-import com.eomcs.lms.proxy.BoardDaoProxy;
-import com.eomcs.lms.proxy.LessonDaoProxy;
-import com.eomcs.lms.proxy.MemberDaoProxy;
 
 public class App {
 
@@ -36,26 +39,26 @@ public class App {
 
     Map<String,Command> commandMap = new HashMap<>();
 
-    LessonDaoProxy lessonDaoProxy = new LessonDaoProxy("localhost", 8888, "/lesson");
-    commandMap.put("/lesson/add", new LessonAddCommand(keyboard, lessonDaoProxy));
-    commandMap.put("/lesson/list", new LessonListCommand(keyboard, lessonDaoProxy));
-    commandMap.put("/lesson/detail", new LessonDetailCommand(keyboard, lessonDaoProxy));
-    commandMap.put("/lesson/update", new LessonUpdateCommand(keyboard, lessonDaoProxy));
-    commandMap.put("/lesson/delete", new LessonDeleteCommand(keyboard, lessonDaoProxy));
+    LessonDaoImpl lessonDaoImpl = new LessonDaoImpl();
+    commandMap.put("/lesson/add", new LessonAddCommand(keyboard, lessonDaoImpl));
+    commandMap.put("/lesson/list", new LessonListCommand(keyboard, lessonDaoImpl));
+    commandMap.put("/lesson/detail", new LessonDetailCommand(keyboard, lessonDaoImpl));
+    commandMap.put("/lesson/update", new LessonUpdateCommand(keyboard, lessonDaoImpl));
+    commandMap.put("/lesson/delete", new LessonDeleteCommand(keyboard, lessonDaoImpl));
 
-    MemberDaoProxy memberDaoProxy = new MemberDaoProxy("localhost", 8888, "/member");
-    commandMap.put("/member/add", new MemberAddCommand(keyboard, memberDaoProxy));
-    commandMap.put("/member/list", new MemberListCommand(keyboard, memberDaoProxy));
-    commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberDaoProxy));
-    commandMap.put("/member/update", new MemberUpdateCommand(keyboard, memberDaoProxy));
-    commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberDaoProxy));
+    MemberDaoImpl memberDaoImpl = new MemberDaoImpl();
+    commandMap.put("/member/add", new MemberAddCommand(keyboard, memberDaoImpl));
+    commandMap.put("/member/list", new MemberListCommand(keyboard, memberDaoImpl));
+    commandMap.put("/member/detail", new MemberDetailCommand(keyboard, memberDaoImpl));
+    commandMap.put("/member/update", new MemberUpdateCommand(keyboard, memberDaoImpl));
+    commandMap.put("/member/delete", new MemberDeleteCommand(keyboard, memberDaoImpl));
 
-    BoardDaoProxy boardDaoProxy = new BoardDaoProxy("localhost", 8888, "/board");
-    commandMap.put("/board/add", new BoardAddCommand(keyboard, boardDaoProxy));
-    commandMap.put("/board/list", new BoardListCommand(keyboard, boardDaoProxy));
-    commandMap.put("/board/detail", new BoardDetailCommand(keyboard, boardDaoProxy));
-    commandMap.put("/board/update", new BoardUpdateCommand(keyboard, boardDaoProxy));
-    commandMap.put("/board/delete", new BoardDeleteCommand(keyboard, boardDaoProxy));
+    BoardDaoImpl boardDaoImpl = new BoardDaoImpl();
+    commandMap.put("/board/add", new BoardAddCommand(keyboard, boardDaoImpl));
+    commandMap.put("/board/list", new BoardListCommand(keyboard, boardDaoImpl));
+    commandMap.put("/board/detail", new BoardDetailCommand(keyboard, boardDaoImpl));
+    commandMap.put("/board/update", new BoardUpdateCommand(keyboard, boardDaoImpl));
+    commandMap.put("/board/delete", new BoardDeleteCommand(keyboard, boardDaoImpl));
 
     while (true) {
       String command = prompt();

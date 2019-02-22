@@ -9,11 +9,9 @@ import com.eomcs.lms.domain.Lesson;
 public class LessonUpdateCommand implements Command {
 
   Scanner keyboard;
-  
 
   public LessonUpdateCommand(Scanner keyboard) {
     this.keyboard = keyboard;
-
   }
 
   @Override
@@ -22,45 +20,40 @@ public class LessonUpdateCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-
-      Lesson lesson =  LessonAgent.get(no, in, out);
-
-      // 기존 값 복제
+      Lesson lesson = LessonAgent.get(no, in, out);
+    
       Lesson temp = lesson.clone();
-
+      
       System.out.printf("수업명(%s)? ", lesson.getTitle());
       String input = keyboard.nextLine();
       if (input.length() > 0) 
         temp.setTitle(input);
-
+      
       System.out.printf("설명(%s)? ", lesson.getContents());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setContents(input);
-
+      
       System.out.printf("시작일(%s)? ", lesson.getStartDate());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setStartDate(Date.valueOf(input));
-
+      
       System.out.printf("종료일(%s)? ", lesson.getEndDate());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setEndDate(Date.valueOf(input));
-
+      
       System.out.printf("총수업시간(%d)? ", lesson.getTotalHours());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setTotalHours(Integer.parseInt(input));
-
+      
       System.out.printf("일수업시간(%d)? ", lesson.getDayHours());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setDayHours(Integer.parseInt(input));
-
+      
       LessonAgent.update(temp, in, out);
-
-      System.out.println("수업정보를 변경했습니다.");
-
+      System.out.println("변경했습니다.");
+      
     } catch (Exception e) {
-      System.out.printf("게시글 수업정보 업데이트 오류! : %s\n", e.getMessage());    }
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
+    }
   }
-
 }
-
-

@@ -2,8 +2,8 @@ package com.eomcs.lms.handler;
 
 import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.lms.mariadb.LessonDao;
 
 public class LessonListCommand implements Command {
   

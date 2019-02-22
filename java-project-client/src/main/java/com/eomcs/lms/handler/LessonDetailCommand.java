@@ -1,7 +1,7 @@
 package com.eomcs.lms.handler;
 import java.util.Scanner;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.lms.mariadb.LessonDao;
 
 public class LessonDetailCommand implements Command {
 
@@ -20,11 +20,7 @@ public class LessonDetailCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-      Lesson lesson = lessonDao.findByNo(no); 
-      if(lesson == null) {
-        System.out.println("해당 번호의 게시물이 없습니다.");
-        return;
-      }
+      Lesson lesson = lessonDao.findByNo(no);
       System.out.printf("수업명: %s\n", lesson.getTitle());
       System.out.printf("설명: %s\n", lesson.getContents());
       System.out.printf("기간: %s ~ %s\n", lesson.getStartDate(), lesson.getEndDate());

@@ -1,7 +1,7 @@
 package com.eomcs.lms.handler;
 import java.util.Scanner;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.mariadb.MemberDao;
 
 public class MemberDetailCommand implements Command {
   
@@ -20,10 +20,6 @@ public class MemberDetailCommand implements Command {
 
     try {
       Member member = memberDao.findByNo(no);
-      if(member == null) {
-        System.out.println("해당 번호의 게시물이 없습니다.");
-        return;
-      }
       System.out.printf("이름: %s\n", member.getName());
       System.out.printf("이메일: %s\n", member.getEmail());
       System.out.printf("암호: %s\n", member.getPassword());

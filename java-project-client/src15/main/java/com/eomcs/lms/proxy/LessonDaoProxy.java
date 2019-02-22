@@ -7,6 +7,8 @@ import java.util.List;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
+//서버쪽에 있는 LessonDaoImpl 객체를 대행할 클라이언트측 대행자 클래스 정의 
+//
 public class LessonDaoProxy implements LessonDao {
 
   String serverAddr;
@@ -25,22 +27,21 @@ public class LessonDaoProxy implements LessonDao {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-      out.writeUTF("/lesson/list");
+      out.writeUTF("/lesson/list"); 
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
 
       String status = in.readUTF();
 
-      if (!status.equals("OK"))
+      if (!status.equals("OK")) 
         throw new Exception("서버의 데이터 목록 가져오기 실패!");
 
       return (List<Lesson>) in.readObject();
+      
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
-  
-
   }
 
   public void insert(Lesson lesson) {
@@ -48,7 +49,7 @@ public class LessonDaoProxy implements LessonDao {
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
 
-      out.writeUTF("/lesson/add");
+      out.writeUTF("/lesson/add"); 
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
@@ -60,8 +61,7 @@ public class LessonDaoProxy implements LessonDao {
 
       if (!status.equals("OK"))
         throw new Exception("서버의 데이터 저장 실패!");
-      
-    }catch (Exception e) {
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
@@ -81,11 +81,12 @@ public class LessonDaoProxy implements LessonDao {
 
       String status = in.readUTF();
 
-      if (!status.equals("OK"))
+      if (!status.equals("OK")) 
         throw new Exception("서버의 데이터 가져오기 실패!");
 
       return (Lesson) in.readObject();
-    }catch (Exception e) {
+      
+    }  catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
@@ -104,15 +105,17 @@ public class LessonDaoProxy implements LessonDao {
       out.flush();
 
       String status = in.readUTF();
-      if (!status.equals("OK"))
+      if (!status.equals("OK")) 
         throw new Exception("서버의 데이터 데이터 변경 실패!");
+      
       return 1;
-    }catch (Exception e) {
+      
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
-  public int delete(int no){
+  public int delete(int no) {
     try (Socket socket = new Socket(this.serverAddr, this.port);
         ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream());
         ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
@@ -127,13 +130,22 @@ public class LessonDaoProxy implements LessonDao {
 
       String status = in.readUTF();
 
-      if (!status.equals("OK"))
+      if (!status.equals("OK")) 
         throw new Exception("서버의 데이터 삭제 실패!");
+      
       return 1;
-    }catch (Exception e) {
+      
+    } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 }
+
+
+
+
+
+
+
 
 

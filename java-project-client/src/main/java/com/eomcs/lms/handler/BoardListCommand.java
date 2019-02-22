@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.dao.BoardDao;
 import com.eomcs.lms.domain.Board;
-import com.eomcs.lms.mariadb.BoardDao;
 
 public class BoardListCommand implements Command {
 

@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 import java.util.List;
 import java.util.Scanner;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.mariadb.MemberDao;
 
 public class MemberListCommand implements Command {
   

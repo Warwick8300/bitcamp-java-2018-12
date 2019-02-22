@@ -1,0 +1,109 @@
+package com.eomcs.lms;
+// 
+
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import com.eomcs.lms.context.ApplicationContextListener;
+import com.eomcs.lms.handler.Command;
+
+public class ServerApp2 {
+
+ 
+ 
+  ArrayList<ApplicationContextListener> listeners = new ArrayList<>();
+
+
+  public void addApplicationContextListener(ApplicationContextListener listener) {
+    listeners.add(listener);
+
+  }
+
+  public void service() throws Exception {
+
+
+    try (ServerSocket ss = new ServerSocket(8888)) {
+
+      HashMap<String, Object> context = new HashMap<>();
+    
+
+
+      for (ApplicationContextListener listener : listeners) {
+        listener.contextInitialized(context);
+      }
+
+
+      System.out.println("서버실행중");
+      while (true) {
+
+        try (Socket socket = ss.accept();
+            BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+            PrintWriter out = new PrintWriter(socket.getOutputStream())) {
+
+          String request = in.readLine();
+          if (request.equalsIgnoreCase("stop")) {
+            System.out.println("서버를 종료합니다.");
+            break;
+
+          }
+         
+
+          Command commandHandler = (Command)context.get(request);
+          if (commandHandler == null) {
+           out.println("실행할수 없는 명령어입니다.");
+           out.println("!end!");
+           out.flush();
+            continue;
+          }
+          out.println("ok");
+          out.println("!end!");
+          out.flush();
+          
+          
+          // stateful을 stateless로 전환할 때 주의할 점!
+          // => 가능한 서버에 요청하는 시점에 서버와 연결하라!
+          // => 이 클래스에서 서버와 연결하지 않고 
+          //    데이터를 요청하는 일을 하는 객체(*Agent)에 서버 연결을 맡긴다. 
+        /*
+          try {
+            commandHandler.execute();
+            System.out.println(); 
+
+          } catch (Exception e) {
+            System.out.println("명령어 실행 중 오류 발생 : " + e.toString());
+          }
+          */
+          
+          
+          
+          
+          
+        } // try(socket)
+      } // while
+
+
+
+      for (ApplicationContextListener listener : listeners) {
+        listener.contextDestroyed(context);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } // try(Serversocket)
+  }
+
+
+
+
+  public static void main(String[] args) throws Exception {
+    ServerApp2 app = new ServerApp2();
+
+    app.addApplicationContextListener(new ApplicationInitializer());
+    // App 을 실행한다.
+    app.service();
+  }
+}

@@ -1,7 +1,7 @@
 package com.eomcs.lms.handler;
 import java.util.Scanner;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.mariadb.MemberDao;
 
 public class MemberUpdateCommand implements Command {
   
@@ -44,10 +44,8 @@ public class MemberUpdateCommand implements Command {
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setTel(input);
       
-      if (memberDao.update(temp) == 0) {
-        System.out.println("해당 게시물이 없습니다..");
-      } else
-        System.out.println("변경했습니다.");
+      memberDao.update(temp);
+      System.out.println("변경했습니다.");
       
     } catch (Exception e) {
       System.out.printf("실행 오류! : %s\n", e.getMessage());

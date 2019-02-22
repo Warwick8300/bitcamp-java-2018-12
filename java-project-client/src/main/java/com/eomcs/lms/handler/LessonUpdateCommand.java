@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 import java.sql.Date;
 import java.util.Scanner;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
-import com.eomcs.lms.mariadb.LessonDao;
 
 public class LessonUpdateCommand implements Command {
 
@@ -24,7 +24,7 @@ public class LessonUpdateCommand implements Command {
       Lesson lesson = lessonDao.findByNo(no);
     
       Lesson temp = lesson.clone();
-      System.out.println(temp.getNo());
+      
       System.out.printf("수업명(%s)? ", lesson.getTitle());
       String input = keyboard.nextLine();
       if (input.length() > 0) 
@@ -50,10 +50,8 @@ public class LessonUpdateCommand implements Command {
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setDayHours(Integer.parseInt(input));
       
-      if (lessonDao.update(temp) == 0) {
-        System.out.println("해당 게시물이 없습니다..");
-      } else
-        System.out.println("변경했습니다.");
+      lessonDao.update(temp);
+      System.out.println("변경했습니다.");
       
     } catch (Exception e) {
       System.out.printf("실행 오류! : %s\n", e.getMessage());

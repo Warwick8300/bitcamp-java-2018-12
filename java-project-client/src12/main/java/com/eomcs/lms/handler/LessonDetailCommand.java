@@ -8,11 +8,9 @@ import com.eomcs.lms.domain.Lesson;
 public class LessonDetailCommand implements Command {
 
   Scanner keyboard;
-  
 
   public LessonDetailCommand(Scanner keyboard) {
     this.keyboard = keyboard;
-
   }
 
   @Override
@@ -21,8 +19,6 @@ public class LessonDetailCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
 
     try {
-     
-
       Lesson lesson = LessonAgent.get(no, in, out);
       System.out.printf("수업명: %s\n", lesson.getTitle());
       System.out.printf("설명: %s\n", lesson.getContents());
@@ -31,13 +27,8 @@ public class LessonDetailCommand implements Command {
       System.out.printf("일수업시간: %d\n", lesson.getDayHours());
       
     } catch (Exception e) {
-      System.out.printf("수업 정보 출력 오류! : %s\n", e.getMessage());
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
     }
 
-
-
-   
   }
-
-
 }

@@ -1,8 +1,8 @@
 package com.eomcs.lms.handler;
 import java.sql.Date;
 import java.util.Scanner;
+import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
-import com.eomcs.lms.mariadb.MemberDao;
 
 public class MemberAddCommand implements Command {
   
@@ -17,6 +17,9 @@ public class MemberAddCommand implements Command {
   @Override
   public void execute() {
     Member member = new Member();
+    
+    System.out.print("번호? ");
+    member.setNo(Integer.parseInt(keyboard.nextLine()));
     
     System.out.print("이름? ");
     member.setName(keyboard.nextLine());

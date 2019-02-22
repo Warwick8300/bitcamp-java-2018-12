@@ -1,6 +1,6 @@
 package com.eomcs.lms.handler;
 import java.util.Scanner;
-import com.eomcs.lms.mariadb.MemberDao;
+import com.eomcs.lms.dao.MemberDao;
 
 public class MemberDeleteCommand implements Command {
   
@@ -18,12 +18,11 @@ public class MemberDeleteCommand implements Command {
     int no = Integer.parseInt(keyboard.nextLine());
     
     try {
-      if( memberDao.delete(no) ==0) {
-        System.out.println("해당 회원이 없습니다..");
-      }else
-        System.out.println("삭제했습니다.");
-     } catch (Exception e) {
-       System.out.printf("실행 오류! : %s\n", e.getMessage());
-     }
+      memberDao.delete(no);
+      System.out.println("삭제했습니다.");
+      
+    } catch (Exception e) {
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
+    }
   }
 }

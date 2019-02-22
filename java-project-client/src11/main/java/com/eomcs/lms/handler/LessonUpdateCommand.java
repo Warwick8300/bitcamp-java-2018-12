@@ -8,11 +8,9 @@ import com.eomcs.lms.domain.Lesson;
 public class LessonUpdateCommand implements Command {
 
   Scanner keyboard;
-  
 
   public LessonUpdateCommand(Scanner keyboard) {
     this.keyboard = keyboard;
-
   }
 
   @Override
@@ -25,65 +23,60 @@ public class LessonUpdateCommand implements Command {
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
-
+      
       out.writeInt(no);
       out.flush();
-
+      
       String status = in.readUTF();
-
-      if (!status.equals("OK")) {
-        throw new Exception("서버에서 수업정보 자겨오기 실패.");
-      }
-
+      
+      if (!status.equals("OK")) 
+        throw new Exception("서버의 데이터 가져오기 실패!");
+      
       Lesson lesson = (Lesson) in.readObject();
-
-      // 기존 값 복제
+    
       Lesson temp = lesson.clone();
-
+      
       System.out.printf("수업명(%s)? ", lesson.getTitle());
       String input = keyboard.nextLine();
       if (input.length() > 0) 
         temp.setTitle(input);
-
+      
       System.out.printf("설명(%s)? ", lesson.getContents());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setContents(input);
-
+      
       System.out.printf("시작일(%s)? ", lesson.getStartDate());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setStartDate(Date.valueOf(input));
-
+      
       System.out.printf("종료일(%s)? ", lesson.getEndDate());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setEndDate(Date.valueOf(input));
-
+      
       System.out.printf("총수업시간(%d)? ", lesson.getTotalHours());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setTotalHours(Integer.parseInt(input));
-
+      
       System.out.printf("일수업시간(%d)? ", lesson.getDayHours());
       if ((input = keyboard.nextLine()).length() > 0)
         temp.setDayHours(Integer.parseInt(input));
-
+      
       out.writeUTF("/lesson/update");
       out.flush();
       if (!in.readUTF().equals("OK"))
         throw new Exception("서버에서 해당 명령어를 처리하지 못합니다.");
-
+      
       out.writeObject(temp);
       out.flush();
-
+      
       status = in.readUTF();
-
-      if (!status.equals("OK"))
-        throw new Exception("서버에서 수업정보 변경 실패.");
-
-      System.out.println("수업정보를 변경했습니다.");
-
+      if (!status.equals("OK")) 
+        throw new Exception("서버의 데이터 데이터 변경 실패!");
+      
+      System.out.println("변경했습니다.");
+      
     } catch (Exception e) {
-      System.out.printf("게시글 수업정보 업데이트 오류! : %s\n", e.getMessage());    }
+      System.out.printf("실행 오류! : %s\n", e.getMessage());
+    }
   }
-
 }
-
-

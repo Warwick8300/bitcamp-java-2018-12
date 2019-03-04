@@ -1,4 +1,4 @@
-package com.eomcs.lms.mariadb;
+package com.eomcs.lms.dao.mariadb;
 
 // DBMS 적용
 import java.sql.Connection;
@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
 
 public class LessonDaoImpl implements LessonDao {

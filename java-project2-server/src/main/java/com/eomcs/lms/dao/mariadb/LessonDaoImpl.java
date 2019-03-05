@@ -8,21 +8,21 @@ import java.util.ArrayList;
 import java.util.List;
 import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.domain.Lesson;
+import com.eomcs.util.DataSource;
 
 public class LessonDaoImpl implements LessonDao {
-  Connection con;
 
-  // Dao가 사용하는 커넥션 객체를 외부에서 주입받는당
-
-  public LessonDaoImpl(Connection con) {
-    this.con = con;
+  DataSource dataSource;
+  public LessonDaoImpl(DataSource dataSource) {
+    this.dataSource = dataSource;
   }
-
 
   public List<Lesson> findAll() {
     List<Lesson> list = new ArrayList<Lesson>();
     // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-    try (PreparedStatement stmt = con.prepareStatement(
+    Connection con = dataSource.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
         "select lesson_id,titl, conts, sdt, edt, tot_hr, day_hr from lms_lesson order by lesson_id desc")) {
       try (ResultSet rs = stmt.executeQuery()) {
         while (rs.next()) {
@@ -48,7 +48,9 @@ public class LessonDaoImpl implements LessonDao {
   }
 
   public void insert(Lesson lesson) {
-    try (PreparedStatement stmt = con.prepareStatement(
+    Connection con = dataSource.getConnection();
+    try (
+        PreparedStatement stmt = con.prepareStatement(
         "insert into lms_lesson(titl, conts, sdt, edt, tot_hr, day_hr)" + " values(?,?,?,?,?,?)")) {
 
       stmt.setString(1, lesson.getTitle());
@@ -70,9 +72,10 @@ public class LessonDaoImpl implements LessonDao {
   public Lesson findByNo(int no) {
     Lesson lesson = new Lesson();
 
-
+    Connection con = dataSource.getConnection();
     // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-    try (PreparedStatement stmt =
+    try (
+        PreparedStatement stmt =
         con.prepareStatement("select * from lms_lesson where lesson_id = ?")) {
 
       stmt.setInt(1, no);
@@ -104,7 +107,9 @@ public class LessonDaoImpl implements LessonDao {
 
   public int update(Lesson lesson) {
       // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-      try (PreparedStatement stmt = con.prepareStatement(
+    Connection con = dataSource.getConnection();
+      try (
+          PreparedStatement stmt = con.prepareStatement(
           "update lms_lesson set" + " titl = ?, conts = ?, sdt = ?, edt = ?, tot_hr = ? , day_hr =?"
               + " where lesson_id = ?")) {
         stmt.setString(1, lesson.getTitle());
@@ -123,7 +128,9 @@ public class LessonDaoImpl implements LessonDao {
 
   public int delete(int no) {
    // PreparedStatement 미리sql 문장을 준비하여 값을 삽입하는 기법
-      try (PreparedStatement stmt =
+    Connection con = dataSource.getConnection();
+      try (
+          PreparedStatement stmt =
           con.prepareStatement("delete from lms_lesson where lesson_id = ?")) {
 
         stmt.setInt(1, no);

@@ -127,6 +127,7 @@ public class ServerApp {
 
       } finally {// try(socket)//
         dataSource.returnConnection(con);
+        System.out.println("실행할수 없는 명령어입니다.");
 
       }
     }

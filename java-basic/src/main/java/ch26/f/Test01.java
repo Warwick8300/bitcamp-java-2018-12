@@ -1,42 +1,47 @@
-//udate 실행하기
-package ch26.e;
+// dynamic SQL 다루기 - 조건문
+package ch26.f;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Scanner;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class Test03 {
+public class Test01 {
 
   public static void main(String[] args) throws Exception {
     
     InputStream inputStream = Resources.getResourceAsStream(
-        "ch26/e/mybatis-config.xml");
+        "ch26/f/mybatis-config.xml");
     SqlSessionFactory sqlSessionFactory =
       new SqlSessionFactoryBuilder().build(inputStream);
     
     SqlSession sqlSession = sqlSessionFactory.openSession();
  
-
-    Board board = new Board();
-    board.setTitle("222오호라...제목이오!");
-    board.setContents("222내용이라네요...");
-    board.setNo(19);
-
-    int count = sqlSession.update("board.update", board);
-    System.out.println(count);
-  
     
-    sqlSession.commit();
+    Scanner keyboard = new Scanner(System.in);
+    System.out.println("게시물 번호?");
+    String keyword = keyboard.nextLine();
+    keyboard.close();
     
-    List<Board> boards = sqlSession.selectList("board.select1");
+    
+    List<Board> boards = null;
+    try {
+      boards = sqlSession.selectList("board.select1",Integer.parseInt(keyword));
+    }catch(Exception e) {
+      boards = sqlSession.selectList("board.select1");
+      }
     for (Board b : boards) {
       System.out.println(b);
+      
     }
+    
+       
     System.out.println("-------------------------------");
+    
+
   }
 
 }

@@ -1,4 +1,4 @@
-//udate 실행하기
+// SQL을 실행할 때 파라미터 값 넘기기 II - 도메인 객체 넘기기
 package ch26.e;
 
 import java.io.InputStream;
@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class Test03 {
+public class Test05 {
 
   public static void main(String[] args) throws Exception {
     
@@ -20,15 +20,23 @@ public class Test03 {
     
     SqlSession sqlSession = sqlSessionFactory.openSession();
  
-
+ 
+ 
     Board board = new Board();
-    board.setTitle("222오호라...제목이오!");
-    board.setContents("222내용이라네요...");
-    board.setNo(19);
+    board.setTitle("오호라...제목이오!");
+    board.setContents("내용이라네요...");
+    
+    System.out.println(board);
+    sqlSession.insert("board.insert1", board);
 
-    int count = sqlSession.update("board.update", board);
-    System.out.println(count);
-  
+    
+    System.out.println("----------------------------");
+   sqlSession.insert("board.insert3", board);
+   System.out.println(board);
+   System.out.println("----------------------------");
+    
+    
+    
     
     sqlSession.commit();
     

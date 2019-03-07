@@ -9,7 +9,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
-public class Test03 {
+public class Test04 {
 
   public static void main(String[] args) throws Exception {
     
@@ -21,12 +21,8 @@ public class Test03 {
     SqlSession sqlSession = sqlSessionFactory.openSession();
  
 
-    Board board = new Board();
-    board.setTitle("222오호라...제목이오!");
-    board.setContents("222내용이라네요...");
-    board.setNo(19);
 
-    int count = sqlSession.update("board.update", board);
+    int count = sqlSession.delete("board.delete", 20);
     System.out.println(count);
   
     

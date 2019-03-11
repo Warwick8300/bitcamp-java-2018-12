@@ -5,27 +5,38 @@ import com.eomcs.lms.dao.LessonDao;
 import com.eomcs.lms.dao.PhotoBoardDao;
 import com.eomcs.lms.dao.PhotoFileDao;
 import com.eomcs.lms.domain.PhotoBoard;
+import com.eomcs.mybatis.TransactionManager;
 
 public class LessonDeleteCommand extends AbstractCommand {
 
   LessonDao lessonDao;
   PhotoBoardDao photoBoardDao;
   PhotoFileDao photoFileDao;
-  public LessonDeleteCommand(LessonDao lessonDao,PhotoBoardDao photoBoardDao,PhotoFileDao photoFileDao ) {
+  TransactionManager txManager;
+  
+  public LessonDeleteCommand(
+      LessonDao lessonDao, 
+      PhotoBoardDao photoBoardDao,
+      PhotoFileDao photoFileDao,
+      TransactionManager txManager) {
     this.lessonDao = lessonDao;
     this.photoBoardDao = photoBoardDao;
     this.photoFileDao = photoFileDao;
+    this.txManager = txManager;
   }
   
 
   @Override
   public void execute(Response response) throws Exception {
+    txManager.beginTransaction();
+    try {
       int no = response.requestInt("번호?");
-  
+      
       HashMap<String,Object> params = new HashMap<>();
-      params.put("lessonNo",no);
+      params.put("lessonNo", no);
+      
       List<PhotoBoard> boards = photoBoardDao.findAll(params);
-      for(PhotoBoard board : boards) {
+      for (PhotoBoard board : boards) {
         photoFileDao.deleteByPhotoBoardNo(board.getNo());
         photoBoardDao.delete(board.getNo());
       }
@@ -35,5 +46,15 @@ public class LessonDeleteCommand extends AbstractCommand {
         return;
       }
       response.println("삭제했습니다.");
+      txManager.commit();
+      
+    } catch (Exception e) {
+      txManager.rollback();
+      response.println("삭제 중 오류 발생.");
+    }
   }
 }
+
+
+
+

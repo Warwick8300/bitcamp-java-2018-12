@@ -2,14 +2,8 @@ package design_pattern.observer.after;
 
 public class LightOffCarObserver implements CarObserver {
 
-  public LightOffCarObserver() {
-    // TODO 자동 생성된 생성자 스텁
-  }
-
   @Override
-  public void carStart() {
- 
-    
+  public void carStarted() {
   }
 
   @Override
@@ -17,5 +11,5 @@ public class LightOffCarObserver implements CarObserver {
     System.out.println("전조등을 끈다.");
     
   }
-
+  
 }

@@ -1,14 +1,19 @@
+// 인스턴스 필드의 등장
 package ch09;
-// 인스턴스 필드의 등
-public class Test05 {
 
+public class Test05 {
+  
   public static void main(String[] args) {
     
+    // Calculator3를 사용하여 두 계산식을 동시에 실행하기
+    // 식1) 2 * 3 - 2 + 7 = ?
+    // 식2) 6 / 2 + 9 = ?
+    
+    // Calculator3 설계도에 따라 result 변수를 준비한다.
     Calculator3 c1 = new Calculator3();
     Calculator3 c2 = new Calculator3();
-    
-    
-    Calculator3.plus(c1, 2);
+        
+    Calculator3.plus(c1/*result 변수가 있는 인스턴스 주소*/, 2);
     Calculator3.plus(c2, 6);
     
     Calculator3.multiple(c1, 3);
@@ -17,28 +22,34 @@ public class Test05 {
     Calculator3.minus(c1, 2);
     Calculator3.plus(c2, 9);
     
-    Calculator3.plus(c1,  7);
+    Calculator3.plus(c1, 7); 
     
     System.out.println(c1.result);
     System.out.println(c2.result);
     
-    Calculator2 c3 = new Calculator2();
-    Calculator2 c4 = new Calculator2();
-    
-    c3.plus(2);
-    c4.plus(6);
-    
-    
-    
-    
-    /*
-    int result1 = Calculator1.multiple(2, 3);
-    int result2 = Calculator1.divide(6, 2);
-    result1 = Calculator1.minus(result1, 2);
-    result1 = Calculator1.plus(result1, 7);
-    System.out.println(result1);
-    System.out.println(result2);장
-    */
+    // 오호라~~ result를 인스턴스 필드로 선언하면서
+    // 계산 결과를 개별적으로 관리할 수 있게 되었다.
+    // 
+    // 그런데 메서드를 호출할 때마다 메서드가 사용할 result를 알려주기 위해
+    // 파라미터로 인스턴스 주소를 넘겨 줘야 하는 불편함이 생겼다.
+    // 해결책?
+    // => 인스턴스 메서드를 사용하라!
     
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

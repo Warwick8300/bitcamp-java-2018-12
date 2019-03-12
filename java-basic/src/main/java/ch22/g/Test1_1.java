@@ -1,37 +1,34 @@
+// Serialize - 인스턴스 필드의 값 출력 : getter/setter 없는 경우
 package ch22.g;
 
 import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 
-//Serialize - 인스턴스 필드값의 출
 public class Test1_1 {
 
   public static void main(String[] args) {
-    try(ObjectOutputStream out = new ObjectOutputStream(
-        new FileOutputStream("score1.data"))) {
+    try (ObjectOutputStream out = new ObjectOutputStream(
+          new FileOutputStream("score1.data"))) {
+      
       Score1 score = new Score1();
       score.name = "홍길동";
-      score.eng = 90;
-      score.math= 90;
-      score.kor= 90;
-      score.sum = score.kor + score.eng+ score.math;
-      score.aver = score.sum /3;
+      score.kor = 100;
+      score.eng = 100;
+      score.math = 100;
+      score.sum = score.kor + score.eng + score.math;
+      score.aver = score.sum / 3f;
       
-      //인스턴스 출력ㅎ기
+      // 인스턴스 출력하기
       out.writeObject(score);
       
-      System.out.println("출력완료");
-      // Score1클래스는 serialize을 구현하지 않았기 때무에 
-    //  writeObject를 사용불가
+      System.out.println("출력 완료!");
+      
+      // getter/setter 없어도 필드 값을 출력하는데 문제 없다.
+      
     } catch (Exception e) {
-    e.printStackTrace();
-    
+      e.printStackTrace();
     }
-    
-    System.out.println("끝");
-    
-    
-    
+
   }
 
 }

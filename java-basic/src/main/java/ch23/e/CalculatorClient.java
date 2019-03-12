@@ -12,7 +12,7 @@ Stateless는 응답을 받은 후에 연결을 끊는다.
 다시 요청할 때는 서버와 연결을 다시 한다.
 서버쪽에서는 어떻게 클라이언트를 구분하여 작업 결과를 유지할 것인가? 
  */
-public class CalculatorClient3 {
+public class CalculatorClient {
   public static void main(String[] args) {
     
     Scanner keyboard = new Scanner(System.in);

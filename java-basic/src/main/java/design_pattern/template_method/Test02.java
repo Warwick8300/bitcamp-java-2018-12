@@ -1,20 +1,23 @@
+// 템플릿 메서드 패턴 + 팩토리 메서드 패턴 
 package design_pattern.template_method;
-// 템플릿 메서드 패턴 - 수퍼 클래스에 실행 흐름을 정의하고 서브 클래스에 세부 항목을 구현한다.
 
 public class Test02 {
 
   public static void main(String[] args) {
-// 유닛 객체를 직접 생성하지 않고 공장 객체를 통해 생성한다.
-
     
+    // 유닛 객체를 직접 생성하지 않고 공장 객체를 통해 생성한다.
+
     UnitFactory unitFactory = new UnitFactory();
     
+    // 식당 짓기
     Unit u1 = unitFactory.createUnit(UnitFactory.RESTAURANT);
-    u1.build();
-    System.out.println("=========================================");
+    u1.build(); // 수퍼 클래스에서 상속 받은 메서드를 호출한다.
     
+    System.out.println("-----------------------------");
+    
+    // 훈련소 짓기
     Unit u2 = unitFactory.createUnit(UnitFactory.TRAINING_CENTER);
-    u2.build();
+    u2.build(); 
   }
 
 }

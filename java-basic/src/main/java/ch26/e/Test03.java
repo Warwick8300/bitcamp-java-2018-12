@@ -1,8 +1,7 @@
-//udate 실행하기
+// update 실행하기
 package ch26.e;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -20,15 +19,13 @@ public class Test03 {
     
     SqlSession sqlSession = sqlSessionFactory.openSession();
  
-
     Board board = new Board();
-    board.setTitle("222오호라...제목이오!");
-    board.setContents("222내용이라네요...");
-    board.setNo(19);
-
+    board.setNo(5);
+    board.setTitle("xxxxx");
+    board.setContents("내용이라네요...");
+    
     int count = sqlSession.update("board.update", board);
     System.out.println(count);
-  
     
     sqlSession.commit();
     

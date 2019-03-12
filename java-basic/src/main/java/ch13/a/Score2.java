@@ -1,95 +1,90 @@
 package ch13.a;
 
 public class Score2 {
-
+  
   private String name;
   private int kor;
   private int eng;
   private int math;
+  private int sum;
   private int music;
   private int art;
-
-
-  public int getMusic() {
-    return music;
-  }
-
-  public void setMusic(int music) {
-    this.music = music;
-  }
-
-  public int getArt() {
-    return art;
-  }
-
-  public void setArt(int art) {
-    this.art = art;
-  }
-
+  private float aver;
+  
   public String getName() {
-    return name;
+    return this.name;
   }
-
   public void setName(String name) {
     this.name = name;
   }
-
+  
   public int getKor() {
-    return kor;
+    return this.kor;
   }
-
   public void setKor(int kor) {
-    if( kor >= 0&& kor <= 100) {
+    if (kor >= 0 && kor <= 100) { // 유효한 점수인 경우에만 저장한다.
       this.kor = kor;
-      this.compute();
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
     }
   }
-
+  
   public int getEng() {
-    return eng;
+    return this.eng;
   }
-
   public void setEng(int eng) {
-    if( eng >= 0&& eng <= 100) {
+    if (eng >= 0 && eng <= 100) { // 유효한 점수인 경우에만 저장한다.
       this.eng = eng;
-      this.compute();
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
     }
   }
-
+  
   public int getMath() {
-
-    return math;
+    return this.math;
   }
-
   public void setMath(int math) {
-    if( math >= 0 && math <= 100) {
+    if (math >= 0 && math <= 100) {// 유효한 점수인 경우에만 저장한다.
       this.math = math;
-      this.compute();
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
     }
   }
-
-  private int sum;
-  private float aver;
-
-
-
-  public float getAver() {
-    return aver;
+  
+  public int getMusic() {
+    return this.music;
   }
-
-  public void setAver(float aver) {
-    this.aver = aver;
+  public void setMusic(int music) {
+    if (music >= 0 && music <= 100) {// 유효한 점수인 경우에만 저장한다.
+      this.music = music;
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
+    }
   }
-
+  
+  public int getArt() {
+    return this.art;
+  }
+  public void setArt(int art) {
+    if (art >= 0 && art <= 100) {// 유효한 점수인 경우에만 저장한다.
+      this.art = art;
+      this.compute(); // 유효한 값이라면 다시 합계와 평균을 계산한다.
+    }
+  }
+  
   public int getSum() {
-    return sum;
+    return this.sum;
   }
-
-  public void setSum(int sum) {
-    this.sum = sum;
+  
+  public float getAver() {
+    return this.aver;
   }
+  
   private void compute() {
-    this.setSum(this.kor + this.eng + this.math + this.art + this.music);
-    this.setAver(this.getSum() / 5f);
+    this.sum = this.kor + this.eng + this.math + this.music + this.art;
+    this.aver = this.sum / 5f;
   }
 }
+
+
+
+
+
+
+

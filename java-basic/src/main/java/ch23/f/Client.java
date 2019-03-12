@@ -1,35 +1,45 @@
+// Connection-Oriented vs Connectionless
 package ch23.f;
 
 import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-//Connection - Oriented vs Connection less
 public class Client {
-  
   public static void main(String[] args) {
     
+    // Connection-Oriented = Connectionful
+    // => 데이터를 주고 받으려면 항상 먼저 연결해야 한다.
+    // => Socket, ServerSocket을 사용하여 처리한다.
     
-    
-    try(Socket socket = new Socket("www.kma.go.kr",80);
+    try (Socket socket = new Socket("localhost", 8888);
         PrintStream out = new PrintStream(socket.getOutputStream());
-        Scanner in = new Scanner(socket.getInputStream())){
+        Scanner in = new Scanner(socket.getInputStream())) {
       
-      out.println("GET / HTTP/1.1");
-      out.println("Host: www.kma.go.kr");
-     out.println("User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.96 Safari/537.36");
-      out.println();
-      out.flush();
+      System.out.println("서버와 연결됨!");
       
+      // 먼저 연결을 한 다음에 데이터를 보내고 받을 수 있다.
+      out.println("Hello!");
+      System.out.println("데이터 보냄!");
       
-      while(true) {
-        System.out.println(in.nextLine());
-      }
-    
-    }catch(Exception e){
+      String response = in.nextLine();
+      System.out.println("데이터 받음!");
       
+      System.out.println(response);
+      
+    } catch (Exception e) {
+      e.printStackTrace();
     }
-    
   }
- 
 }
+
+
+
+
+
+
+
+
+
+
+

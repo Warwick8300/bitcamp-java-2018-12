@@ -1,8 +1,7 @@
-//udate 실행하기
+// delete 실행하기
 package ch26.e;
 
 import java.io.InputStream;
-import java.util.HashMap;
 import java.util.List;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -20,11 +19,8 @@ public class Test04 {
     
     SqlSession sqlSession = sqlSessionFactory.openSession();
  
-
-
-    int count = sqlSession.delete("board.delete", 20);
+    int count = sqlSession.delete("board.delete", 41);
     System.out.println(count);
-  
     
     sqlSession.commit();
     

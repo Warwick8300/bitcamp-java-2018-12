@@ -8,7 +8,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 
-public class CalculatorServer3 {
+public class CalculatorServer {
   public static void main(String[] args) {
     
     // 클라이언트의 작업 결과를 저정할 맵 객체

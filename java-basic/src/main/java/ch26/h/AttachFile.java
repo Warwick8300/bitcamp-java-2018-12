@@ -1,10 +1,14 @@
 package ch26.h;
 
 public class AttachFile {
-
   private int no;
   private String filePath;
   private int boardNo;
+  
+  @Override
+  public String toString() {
+    return "AttachFile [no=" + no + ", filePath=" + filePath + ", boardNo=" + boardNo + "]";
+  }
   public int getNo() {
     return no;
   }
@@ -23,9 +27,6 @@ public class AttachFile {
   public void setBoardNo(int boardNo) {
     this.boardNo = boardNo;
   }
-  @Override
-  public String toString() {
-    return "AttachFile [no=" + no + ", filePath=" + filePath + ", boardNo=" + boardNo + "]";
-  }
-
+  
+  
 }

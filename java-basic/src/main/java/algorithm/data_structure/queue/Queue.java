@@ -1,24 +1,20 @@
 package algorithm.data_structure.queue;
 
 import algorithm.data_structure.linkedlist.LinkedList;
-import algorithm.data_structure.linkedlist.Node;
 
-//기존 기능을 활용하는 가ㅂ
+// 기존 기능을 활용하는 가장 쉬운 방법이 상속이다.
+// 
 public class Queue extends LinkedList {
-  
-  public void offer(Object value) {
-    super.add(value);
-    
- 
-  }
 
+  public void offer(Object value) {
+    this.add(value);
+  }
+  
   public Object poll() {
-   return super.remove(0);
-  }//값을 거내라
+    return this.remove(0);
+  }
   
   public boolean empty() {
-    return size==0;
+    return this.size == 0;
   }
-  
-  //상속 받은 필드나 메서드를 사용하여 값을 리턴하라
 }

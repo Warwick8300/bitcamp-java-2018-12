@@ -98,13 +98,17 @@ public class ArrayList<E> {
   
   // 자신이 보유한 데이터를 대신 꺼내주는 일을 하는 객체를 리턴한다.
   public Iterator<E> iterator() {
-     return new  Iterator<E>() {
+    return new Iterator<E>() {
+      // 이 클래스는 ArrayList에서 값을 꺼내주는 일을 전문적으로 한다.
+      // => 이런 일을 하는 객체를 "Iterator"라 부른다.
+      //
       int index = 0;
+      
       @Override
       public boolean hasNext() {
         return index < size();
       }
-      @SuppressWarnings("unchecked")
+
       @Override
       public E next() {
         return (E) get(index++);
@@ -113,9 +117,17 @@ public class ArrayList<E> {
   }
   
   
- 
-
 }
+
+
+
+
+
+
+
+
+
+
 
 
 

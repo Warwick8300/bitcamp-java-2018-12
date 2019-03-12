@@ -1,5 +1,6 @@
+// 상속: specialization
 package ch13.g;
-//상속 specialization
+
 public class Car {
   String model;
   int cc;
@@ -9,9 +10,6 @@ public class Car {
   }
   
   public void stop() {
-    System.out.println("달린다");
+    System.out.println("멈춘다.");
   }
-  
-  
-
 }

@@ -2,23 +2,32 @@ package ch22.g;
 
 import java.io.Serializable;
 
-
-public class Score2 implements Serializable{
-  /**
-   * 
-   */
+public class Score2 implements Serializable {
   private static final long serialVersionUID = 1L;
+  
   private String name;
   private int kor;
   private int eng;
   private int math;
   private int sum;
+  private float aver;
+
+  public Score2() {
+    System.out.println("Score2()");
+  }
+
+  @Override
+  public String toString() {
+    return "Score2 [name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math + ", sum="
+        + sum + ", aver=" + aver + "]";
+  }
+
   public String getName() {
     return name;
   }
 
   public void setName(String name) {
-    System.out.println("setter 실행");
+    System.out.println("setName()");
     this.name = name;
   }
 
@@ -27,7 +36,7 @@ public class Score2 implements Serializable{
   }
 
   public void setKor(int kor) {
-    System.out.println("setter 실행");
+    System.out.println("setKor()");
     this.kor = kor;
   }
 
@@ -36,7 +45,7 @@ public class Score2 implements Serializable{
   }
 
   public void setEng(int eng) {
-    System.out.println("setter 실행");
+    System.out.println("setEng()");
     this.eng = eng;
   }
 
@@ -45,7 +54,7 @@ public class Score2 implements Serializable{
   }
 
   public void setMath(int math) {
-    System.out.println("setter 실행");
+    System.out.println("setMath()");
     this.math = math;
   }
 
@@ -54,7 +63,7 @@ public class Score2 implements Serializable{
   }
 
   public void setSum(int sum) {
-    System.out.println("setter 실행");
+    System.out.println("setSum()");
     this.sum = sum;
   }
 
@@ -63,30 +72,11 @@ public class Score2 implements Serializable{
   }
 
   public void setAver(float aver) {
-    System.out.println("setter 실행");
+    System.out.println("setAver()");
     this.aver = aver;
   }
-
-  protected float aver;
   
-  public Score2() {
-    System.out.println("Score1");
-  }
   
-  @Override
-  public String toString() {
-    return "Score2 [name=" + name + ", kor=" + kor + ", eng=" + eng + ", math=" + math + ", sum="
-        + sum + ", aver=" + aver + "]";
-  }
-
-  public Score2(String name, int kor, int eng, int math) {
-    this.name = name;
-    this.kor = kor;
-    this.eng = eng;
-    this.math = math;
-    //this.compute();
-  }
-
 }
 
 

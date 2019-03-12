@@ -1,4 +1,4 @@
-// dynamic SQL 다루기 - <where> 태그의 사용후
+// dynamic SQL 다루기 - <where> 태그 사용 후
 package ch26.f;
 
 import java.io.InputStream;
@@ -20,44 +20,41 @@ public class Test04 {
       new SqlSessionFactoryBuilder().build(inputStream);
     
     SqlSession sqlSession = sqlSessionFactory.openSession();
-    HashMap<String, Object> params = new HashMap<>();
-    // 여러개의 조건으로 검색하기
-    Scanner keyboard = new Scanner(System.in);
-    System.out.println("게시물 번호?");
-    String value = keyboard.nextLine();
+ 
+    HashMap<String,Object> params = new HashMap<>();
 
+    // 여러 개의 조건으로 검색하기
+    Scanner keyboard = new Scanner(System.in);
+    System.out.print("게시물 번호? ");
+    String value = keyboard.nextLine();
     try {
-      params.put("no",Integer.parseInt(value));
-    }catch (Exception e) {
+      params.put("no", Integer.parseInt(value));
+    } catch (Exception e) {
     }
     
-  
-    System.out.println("제목?");
+    System.out.print("제목? ");
     value = keyboard.nextLine();
     if (value.length() > 0) {
       params.put("title", value);
     }
     
-    System.out.println("내용?");
+    System.out.print("내용? ");
     value = keyboard.nextLine();
     if (value.length() > 0) {
       params.put("contents", value);
     }
-   
     
     keyboard.close();
-   
-    List<Board> boards = sqlSession.selectList("board.select4",params);
- 
+    
+    
+    
+    List<Board> boards = sqlSession.selectList("board.select4", params);
+    
     for (Board b : boards) {
       System.out.println(b);
-      
     }
-    
-       
     System.out.println("-------------------------------");
     
-
   }
 
 }

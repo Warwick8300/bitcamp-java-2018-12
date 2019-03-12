@@ -2,19 +2,18 @@ package ch13;
 
 public class Calculator {
   
-  //캡슐화  private
-  // modifier (변경자,한정자)
+  // 이 필드를 갖고 있는 서브 클래스가 접근할 수 있도록 허락한다.
   protected int result;
-  public void plus(int value) {
-   this.result += value;
+  
+  public int getResult() {
+    return this.result;
   }
-  public void minus(int value) {
+  
+  public void plus(int value) {
     this.result += value;
   }
-  public int getResult() {
-    return result;
-  }
-  public void setResult(int result) {
-    this.result = result;
+  
+  public void minus(int value) {
+    this.result -= value;
   }
 }

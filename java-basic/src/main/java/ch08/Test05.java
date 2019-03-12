@@ -1,33 +1,38 @@
+// 클래스 필드 공유
 package ch08;
-// 그 밖의 클래스 맴버들
-class My4  {
-  //클래스 필드 = 스태틱 필드(변수)
-  //클래스가 로딩될 때 생성되는 변수
-  static int a;
-  //클래스 블록 = 스태틱 블록
-  static {
-    System.out.println("오호라");
-  }
-  static {
-    System.out.println("이것이 스태틱 블록이네 !여러개를 선언할수 있네");
-  }
-  static void m1() {
-    System.out.println("나를 호출");
-  }
-
-
-}
 
 public class Test05 {
-
+  
+  static int a; // 클래스가 로딩될 때 Method Area에 a라는 이름의 변수를 만들라는 명령어다!
+  
   public static void main(String[] args) {
-    System.out.println("**************************");
-    My4 obj1; //= new My4();
-    System.out.println("**************************");
-    // My4.a  = 300;      
- // obj1.m1();
-    
-    //  My4.m1();
-    //My4.m1();
+    a = 100; // 같은 클래스에 소속된 멤버이기 때문에 클래스명을 생략해도 된다.
+    m1(); // 같은 클래스에 소속된 멤버이기 때문에 클래스명을 생략해도 된다.
+    m2();
+    System.out.println(a);
+  }
+  
+  static void m1() {
+    a = 200;
+  }
+  
+  static void m2() {
+    a = 300;
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

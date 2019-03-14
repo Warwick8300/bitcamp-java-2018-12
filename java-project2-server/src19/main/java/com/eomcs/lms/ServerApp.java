@@ -1,27 +1,20 @@
-// 20단계: Command 인터페이스 대신 애노테이션을 이용하여 명령어를 처리할 메서드를 식별하기
-// => 기존에는 클라이언트로부터 명령을 받았을 때 Command 규칙에 따라 메서드를 호출하였다.
-// => 이번 단계에서는 Command 인터페이스의 구현 여부와 상관없이 
-//    @RequestMapping이 붙은 메서드를 찾아 호출해보자!
-// => 이렇게 하면 특정 인터페이스의 제약에서 벗어날 수 있다.
-//    좀 더 유연하게 커맨드를 처리하는 코드를 작성할 수 있다. 
+// 19 단계 애너테이션을 적용하여 클래스에서 객체 이름을 추출하기
+
+//IoC (inversion of control)
+// 제어의 역전, 제어의 역행
+// IoC의 대표적인 예 
+// DI
+
+
+
+// => ApplicationInitializer의 Command 객체 생성 작업을 ApplicationContext에 위임한다. 
 // 
-// 작업
-// 1) RequestMapping 애노테이션 정의
-//    => value 프로퍼티는 명령을 저장한다.
-// 2) RequestMappingHandler 정의
-//    => RequestMapping 애노테이션이 붙은 메서드의 정보를 저장하는 클래스
-//    => RequestMappingHandlerMapping의 스태틱 중첩 클래스로 정의한다. 
-// 3) RequestMappingHandlerMapping 정의 
-//    => 클라이언트가 보낸 명령을 처리할 메서드에 대한 정보(RequestMappingHandler)를 관리한다.
-// 4) Command 변경 
-//    => CRUD 관련 커맨드를 한 클래스로 합쳐서 XxxCommand로 만든다.
-//       예) BoardAddCommand, BoardListCommand, ... --> BoardCommand
-// 5) ApplicationContext 변경
-//    => 인스턴스를 모두 생성한 후 RequestMappingHandler을 찾아 
-//       RequestMappingHandlerMapping에 보관한다.
-// 6) ServerApp 변경 
-//    => 클라이언트 요청이 들어왔을 때 RequestMappingHandlerMapping에서 메서드를 찾아 실행한다.
-//
+// 작업:
+// 1) Component 에노테이션정의
+// 2) command 변경
+// 3) ApplicationContext 변경
+
+
 package com.eomcs.lms;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -32,9 +25,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import com.eomcs.lms.context.ApplicationContext;
 import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.context.RequestMappingHandlerMapping;
-import com.eomcs.lms.context.RequestMappingHandlerMapping.RequestMappingHandler;
-import com.eomcs.lms.handler.Response;
+import com.eomcs.lms.handler.Command;
 
 public class ServerApp {
 
@@ -46,9 +37,6 @@ public class ServerApp {
 
   // Command 객체와 그와 관련된 객체를 보관하고 있는 빈 컨테이너
   ApplicationContext beanContainer;
-  
-  // 클라이언트 요청을 처리할 메서드 정보가 들어 있는 객체
-  RequestMappingHandlerMapping handlerMapping;
   
   public void addApplicationContextListener(ApplicationContextListener listener) {
     listeners.add(listener);
@@ -66,11 +54,6 @@ public class ServerApp {
 
       // ApplicationInitializer가 준비한 ApplicationContext를 꺼낸다.
       beanContainer = (ApplicationContext) context.get("applicationContext");
-      
-      // 빈 컨테이너에서 RequestMappingHandlerMapping 객체를 꺼낸다.
-      // 이 객체에 클라이언트 요청을 처리할 메서드 정보가 들어 있다.
-      handlerMapping = 
-          (RequestMappingHandlerMapping) beanContainer.getBean("handlerMapping");
       
       System.out.println("서버 실행 중...");
       
@@ -126,10 +109,10 @@ public class ServerApp {
         String request = in.readLine();
         
         // 클라이언트에게 응답하기
-        // => 클라이언트 요청을 처리할 메서드를 꺼낸다.
-        RequestMappingHandler requestHandler = handlerMapping.get(request);
+        // => 클라이언트 요청을 처리할 객체는 빈 컨테이너에서 꺼낸다.
+        Command commandHandler = (Command) beanContainer.getBean(request);
         
-        if (requestHandler == null) {
+        if (commandHandler == null) {
           out.println("실행할 수 없는 명령입니다.");
           out.println("!end!");
           out.flush();
@@ -137,11 +120,7 @@ public class ServerApp {
         }
         
         try {
-          // 클라이언트 요청을 처리할 메서드를 찾았다면 호출한다.
-          requestHandler.method.invoke(
-              requestHandler.bean, // 메서드를 호출할 때 사용할 인스턴스 
-              new Response(in, out)); // 메서드 파라미터 값
-          
+          commandHandler.execute(in, out);
         } catch (Exception e) {
           out.printf("실행 오류! : %s\n", e.getMessage());
           e.printStackTrace();

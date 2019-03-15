@@ -1,19 +1,29 @@
 package com.eomcs.lms.handler;
 import java.util.List;
-import com.eomcs.lms.context.Component;
+import org.springframework.stereotype.Component;
 import com.eomcs.lms.context.RequestMapping;
 import com.eomcs.lms.dao.MemberDao;
 import com.eomcs.lms.domain.Member;
 
 @Component
-public class MemberCommand extends AbstractCommand {
-
+public class MemberCommand {
+  
   MemberDao memberDao;
-
+  
   public MemberCommand(MemberDao memberDao) {
     this.memberDao = memberDao;
   }
-
+  
+  @RequestMapping("/member/list")
+  public void list(Response response) throws Exception {
+    List<Member> members = memberDao.findAll();
+    for (Member member : members) {
+      response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
+          member.getNo(), member.getName(), 
+          member.getEmail(), member.getTel(), member.getRegisteredDate()));
+    }
+  }
+  
   @RequestMapping("/member/add")
   public void add(Response response) throws Exception {
     Member member = new Member();
@@ -25,17 +35,6 @@ public class MemberCommand extends AbstractCommand {
 
     memberDao.insert(member);
     response.println("저장하였습니다.");
-  }
-  
-  @RequestMapping("/member/delete")
-  public void delete(Response response) throws Exception {
-    int no = response.requestInt("번호?");
-
-    if (memberDao.delete(no) == 0) {
-      response.println("해당 번호의 회원이 없습니다.");
-      return;
-    }
-    response.println("삭제했습니다.");
   }
   
   @RequestMapping("/member/detail")
@@ -55,29 +54,8 @@ public class MemberCommand extends AbstractCommand {
     response.println(String.format("가입일: %s", member.getRegisteredDate()));
   }
   
-  @RequestMapping("/member/list")
-  public void list(Response response) throws Exception {
-    List<Member> members = memberDao.findAll();
-    for (Member member : members) {
-      response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
-          member.getNo(), member.getName(), 
-          member.getEmail(), member.getTel(), member.getRegisteredDate()));
-    }
-  }
-  @RequestMapping("/member/Search")
-  public void Search(Response response) throws Exception {
-    
-    String keyword = response.requestString("검색어?");
-    List<Member> members = memberDao.findByKeyword(keyword);
-
-    for (Member member : members) {
-      response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
-          member.getNo(), member.getName(), 
-          member.getEmail(), member.getTel(), member.getRegisteredDate()));
-    }
-  }
-  @RequestMapping("/member/Update")
-  public void Update(Response response) throws Exception {
+  @RequestMapping("/member/update")
+  public void update(Response response) throws Exception {
     int no = response.requestInt("번호?");
 
     Member member = memberDao.findByNo(no);
@@ -127,5 +105,27 @@ public class MemberCommand extends AbstractCommand {
     }
   }
   
+  @RequestMapping("/member/delete")
+  public void delete(Response response) throws Exception {
+    int no = response.requestInt("번호?");
+
+    if (memberDao.delete(no) == 0) {
+      response.println("해당 번호의 회원이 없습니다.");
+      return;
+    }
+    response.println("삭제했습니다.");
+  }
   
+  @RequestMapping("/member/search")
+  public void search(Response response) throws Exception {
+    
+    String keyword = response.requestString("검색어?");
+    List<Member> members = memberDao.findByKeyword(keyword);
+
+    for (Member member : members) {
+      response.println(String.format("%3d, %-4s, %-20s, %-15s, %s", 
+          member.getNo(), member.getName(), 
+          member.getEmail(), member.getTel(), member.getRegisteredDate()));
+    }
+  }
 }

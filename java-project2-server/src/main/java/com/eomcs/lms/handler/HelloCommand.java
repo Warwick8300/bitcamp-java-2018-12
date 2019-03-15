@@ -1,10 +1,10 @@
 package com.eomcs.lms.handler;
 
-import com.eomcs.lms.context.Component;
+import org.springframework.stereotype.Component;
 import com.eomcs.lms.context.RequestMapping;
 
 @Component
-public class HelloCommand extends AbstractCommand {
+public class HelloCommand {
 
   @RequestMapping("/hello")
   public void execute(Response response) {

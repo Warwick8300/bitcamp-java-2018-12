@@ -1,163 +1,172 @@
-// 21단계: 자바 설정 방식을 이용하여 IoC 컨테이너를 설정하기
-// => IoC 컨테이너에게 필요한 것들을 자바 코드로 설정한다. 
-// 
-// 작업1 - 팩토리 메서드를 통해 객체 생성하기 
-// 1) AppConfig 정의
-//    => IoC 컨테이너가 보관할 객체를 생성하는 메서드 정의
-//    => IoC 컨테이너가 자동으로 생성하지 않는 객체를 메서드에서 리턴한다.
-// 2) Bean 애노테이션 정의 
-//    => IoC 컨테이너가 보관해야 하는 객체를 만들어 주는 메서드를 표시할 때 사용한다.
-//    => IoC 컨테이너는 이 애노테이션이 붙은 메서드를 호출하여 그 리턴 값을 보관할 것이다.
-// 3) AppConfig 변경
-//    => 객체를 생성하여 리턴하는 메서드에 Bean 애노테이션을 붙인다.
-// 4) ApplicationContext 변경
-//    => 생성자의 파라미터로 받은 클래스에 대해 설정 작업을 수행한다.
-// 5) ComponentScan 애노테이션 정의
-//    => IoC 컨테이너가 객체를 자동 생성할 때 뒤질 패키지 이름을 설정한다.
-// 6) AppConfig 변경
-//    => ComponentScan 애노테이션을 추가한다.
-// 7) ApplicationContext 변경
-//    => 생성자에서 ComponentScan 애노테이션을 처리한다.
-//
+// 16단계: 스레드 풀 적용하기
 package com.eomcs.lms;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import com.eomcs.lms.context.ApplicationContext;
-import com.eomcs.lms.context.ApplicationContextListener;
-import com.eomcs.lms.context.RequestMappingHandlerMapping;
-import com.eomcs.lms.context.RequestMappingHandlerMapping.RequestMappingHandler;
-import com.eomcs.lms.handler.Response;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import com.eomcs.lms.dao.BoardDaoImpl;
+import com.eomcs.lms.dao.LessonDaoImpl;
+import com.eomcs.lms.dao.MemberDaoImpl;
+import com.eomcs.lms.service.BoardDaoSkel;
+import com.eomcs.lms.service.LessonDaoSkel;
+import com.eomcs.lms.service.MemberDaoSkel;
+import com.eomcs.lms.service.Service;
 
+// 풀링(pooling) 기법
+// => 자주 사용하는 인스턴스는 미리 생성하여 목록으로 보관하고 있다가 
+//    필요할 때 빌려 쓰고, 사용 후 반납하는 방식으로 인스턴스를 관리한다.
+// => 기존에 생성된 인스턴스를 재사용하기 때문에 가비지가 줄어 들어 메모리를 보다 효율적으로 사용할 수 있다.
+// => 기존의 객체를 재사용하기 때문에 인스턴스 생성에 시간이 많이 소요되는 경우에 
+//    실행 시간을 줄일 수 있다.
+// => "Flyweight 디자인 패턴"의 응용이다.
+// 
+// 스레드 풀
+// => 한 번 생성한 스레드는 실행 후 버리지 않고 재사용한다.
+// => 스레드 목록 관리에 풀링 기법을 적용하였다.
+//
 public class ServerApp {
 
-  // ApplicationContextListener(옵저버) 목록을 보관할 객체
-  ArrayList<ApplicationContextListener> listeners = new ArrayList<>();
+  static BoardDaoImpl boardDao; 
+  static MemberDaoImpl memberDao;
+  static LessonDaoImpl lessonDao;
 
-  // 공용 객체를 보관하는 저장소
-  HashMap<String,Object> context = new HashMap<>();
-
-  // Command 객체와 그와 관련된 객체를 보관하고 있는 빈 컨테이너
-  ApplicationContext beanContainer;
+  static HashMap<String,Service> serviceMap;
+  static Set<String> serviceKeySet;
   
-  // 클라이언트 요청을 처리할 메서드 정보가 들어 있는 객체
-  RequestMappingHandlerMapping handlerMapping;
+  // 스레드 풀 
+  static ExecutorService executorService = Executors.newCachedThreadPool();
   
-  public void addApplicationContextListener(ApplicationContextListener listener) {
-    listeners.add(listener);
-  }
-
-  public void service() throws Exception {
-
-    try (ServerSocket ss = new ServerSocket(8888)) {
-      
-
-      // 애플리케이션을 시작할 때, 등록된 리스너에게 알려준다.
-      for (ApplicationContextListener listener : listeners) {
-        listener.contextInitialized(context);
-      }
-
-      // ApplicationInitializer가 준비한 ApplicationContext를 꺼낸다.
-      beanContainer = (ApplicationContext) context.get("applicationContext");
-      
-      // 빈 컨테이너에서 RequestMappingHandlerMapping 객체를 꺼낸다.
-      // 이 객체에 클라이언트 요청을 처리할 메서드 정보가 들어 있다.
-      handlerMapping = 
-          (RequestMappingHandlerMapping) beanContainer.getBean("handlerMapping");
-      
-      System.out.println("서버 실행 중...");
-      
-      while (true) {
-        new RequestHandlerThread(ss.accept()).start();
-      } // while
-
-      // 애플리케이션을 종료할 때, 등록된 리스너에게 알려준다.
-      // => 현재 while 문은 종료 조건이 없기 때문에 다음 문장을 실행할 수 없다.
-      //    따라서 주석으로 처리한다.
-      /*
-      for (ApplicationContextListener listener : listeners) {
-        listener.contextDestroyed(context);
-      }
-      */
-
+  public static void main(String[] args) {
+    
+    try {
+      boardDao = new BoardDaoImpl("board.bin");
+      boardDao.loadData();
     } catch (Exception e) {
-      e.printStackTrace();
-    } // try(ServerSocket)
-
-  }
-  
-  public static void main(String[] args) throws Exception {
-    ServerApp app = new ServerApp();
-
-    // App이 실행되거나 종료될 때 보고를 받을 옵저버를 등록한다.
-    app.addApplicationContextListener(new ApplicationInitializer());
-
-    // App 을 실행한다.
-    app.service();
-  }
-  
-  // 바깥 클래스(ServerApp)의 인스턴스 필드를 사용해야 한다면 
-  // Inner 클래스(non-static nested class)로 정의하라!
-  // 
-  class RequestHandlerThread extends Thread {
-    
-    Socket socket;
-    
-    public RequestHandlerThread(Socket socket) {
-      this.socket = socket;
+      System.out.println("게시물 데이터 로딩 중 오류 발생!");
     }
     
+    try {
+      memberDao = new MemberDaoImpl("member.bin");
+      memberDao.loadData();
+    } catch (Exception e) {
+      System.out.println("회원 데이터 로딩 중 오류 발생!");
+    }
+    
+    try {
+      lessonDao = new LessonDaoImpl("lesson.bin");
+      lessonDao.loadData();
+    } catch (Exception e) {
+      System.out.println("수업 데이터 로딩 중 오류 발생!");
+    }
+    
+    serviceMap = new HashMap<>();
+    serviceMap.put("/board/", new BoardDaoSkel(boardDao));
+    serviceMap.put("/member/", new MemberDaoSkel(memberDao));
+    serviceMap.put("/lesson/", new LessonDaoSkel(lessonDao));
+    
+    serviceKeySet = serviceMap.keySet();
+    
+    try (ServerSocket serverSocket = new ServerSocket(8888)) {
+      System.out.println("서버 시작!");
+      
+      while (true) {
+        
+        // 독립적으로 실행 해야할 일을 스레드 풀에 맡긴다. 
+        // => 스레드 풀은 현재 놀고 있는 스레드를 꺼내서 
+        //    파라미터로 넘겨 받은 RequestHandler의 run()을 호출하게 만든다.
+        // => 만약 스레드 풀에 놀고 있는 스레드가 없다면 
+        //    새로 스레드를 생성하여 일을 맡긴다.
+        // => 물론 스레드의 작업이 끝났으면 스레드는 다시 풀에 반납된다.
+        //
+        executorService.submit(new RequestHandler(serverSocket.accept()));
+        
+      }
+      
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
+  
+  static class RequestHandler implements Runnable {
+    
+    static int count = 0;
+    
+    Socket socket;
+    String name;
+    
+    public RequestHandler(Socket socket) {
+      this.socket = socket;
+      this.name = "핸들러-" + count++;
+      
+      System.out.printf("[%s : %s] 핸들러가 생성됨\n",
+          Thread.currentThread().getName(),
+          this.getName());
+    }
+    
+    public String getName() {
+      return this.name;
+    }
+    
+    // 독립적으로 수행할 코드를 run() 메서드에 작성한다.
     @Override
     public void run() {
-      
       try (Socket socket = this.socket;
-          BufferedReader in = new BufferedReader(
-              new InputStreamReader(socket.getInputStream()));
-          PrintWriter out = new PrintWriter(socket.getOutputStream())) {
-
-        // 클라이언트의 요청 읽기
-        String request = in.readLine();
+          ObjectInputStream in = new ObjectInputStream(socket.getInputStream());
+          ObjectOutputStream out = new ObjectOutputStream(socket.getOutputStream())) {
         
-        // 클라이언트에게 응답하기
-        // => 클라이언트 요청을 처리할 메서드를 꺼낸다.
-        RequestMappingHandler requestHandler = handlerMapping.get(request);
+        System.out.printf("[%s : %s] 클라이언트와 연결되었음.\n", 
+            Thread.currentThread().getName(),
+            this.getName());
         
-        if (requestHandler == null) {
-          out.println("실행할 수 없는 명령입니다.");
-          out.println("!end!");
-          out.flush();
-          return;
-        }
+        String request = in.readUTF();
+        System.out.printf("[%s : %s] %s\n", 
+            Thread.currentThread().getName(),
+            this.getName(), 
+            request);
         
-        try {
-          // 클라이언트 요청을 처리할 메서드를 찾았다면 호출한다.
-          requestHandler.method.invoke(
-              requestHandler.bean, // 메서드를 호출할 때 사용할 인스턴스 
-              new Response(in, out)); // 메서드 파라미터 값
+        Service service = getService(request);
+        
+        if (service == null) {
+          out.writeUTF("FAIL");
           
-        } catch (Exception e) {
-          out.printf("실행 오류! : %s\n", e.getMessage());
-          e.printStackTrace();
+        } else {
+          service.execute(request, in, out);
         }
-        
-        out.println("!end!");
         out.flush();
         
       } catch (Exception e) {
-        System.out.println("명령어 실행 중 오류 발생 : " + e.toString());
         e.printStackTrace();
-        
       }
+      
+      // 아직 스레드가 스레드풀에 반납되지 않았을 때 클라이언트가 서버와 연결된다면?
+      // => 스레드풀은 새 스레드 객체를 생성하여 일을 맡길 것이다.
+      try {Thread.currentThread().sleep(8000);} catch (Exception e) {}
+      
+      System.out.printf("[%s : %s] 클라이언트와의 연결을 끊었음.\n", 
+          Thread.currentThread().getName(),
+          this.getName());
+    }
+    
+    static Service getService(String request) {
+      for (String key : serviceKeySet) {
+        if (request.startsWith(key)) {
+          return serviceMap.get(key);
+        }
+      }
+      return null;
     }
   }
-  
-  
-  
 }
+
+
+
+
+
 
 
 

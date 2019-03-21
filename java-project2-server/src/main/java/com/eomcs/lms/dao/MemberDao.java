@@ -2,11 +2,12 @@
 package com.eomcs.lms.dao;
 
 import java.util.List;
+import java.util.Map;
 import com.eomcs.lms.domain.Member;
 
 public interface MemberDao {
   int insert(Member member);
-  List<Member> findAll();
+  List<Member> findAll(Map<String,Object> params);
   List<Member> findByKeyword(String keyword);
   Member findByNo(int no);
   int update(Member member);

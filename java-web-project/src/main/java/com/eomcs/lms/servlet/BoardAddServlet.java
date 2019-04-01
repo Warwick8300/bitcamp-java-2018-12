@@ -47,7 +47,6 @@ public class BoardAddServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     Board board = new Board();
-    request.setCharacterEncoding("UTF-8");
     board.setContents(request.getParameter("contents")+ ":" + request.getRemoteAddr());
     BoardService boardService = InitServlet.iocContainer.getBean(BoardService.class);
     response.setContentType("text/html;charset=UTF-8");

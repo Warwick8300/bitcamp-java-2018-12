@@ -1,4 +1,4 @@
-package com.eomcs.lms.servlet;
+package com.eomcs.lms.servlet2;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,7 +11,7 @@ import com.eomcs.lms.InitServlet;
 import com.eomcs.lms.domain.Board;
 import com.eomcs.lms.service.BoardService;
 
-@WebServlet("/board/update")
+@WebServlet("/board2/update")
 @SuppressWarnings("serial")
 public class BoardUpdateServlet extends HttpServlet {
 
@@ -21,7 +21,6 @@ public class BoardUpdateServlet extends HttpServlet {
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     BoardService boardService = InitServlet.iocContainer.getBean(BoardService.class);
-    response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
 
@@ -29,9 +28,7 @@ public class BoardUpdateServlet extends HttpServlet {
     board.setNo(Integer.parseInt(request.getParameter("no")));
     board.setContents(request.getParameter("contents"));
 
-    out.println("<html><head>" + "<title>게시물 변경</title>"
-        + "<meta http-equiv='Refresh' content='1;url=list'>" + "</head>");
-    out.println("<body><h1>게시물 변경</h1>");
+    out.println("<h1>게시물 변경</h1>");
 
     if (boardService.update(board) == 0) {
       out.println("<p>해당 번호의 게시물이 없습니다.</p>");
@@ -39,7 +36,7 @@ public class BoardUpdateServlet extends HttpServlet {
       out.println("<p>변경했습니다.</p>");
     }
 
-    out.println("</body></html>");
+
   }
 }
 

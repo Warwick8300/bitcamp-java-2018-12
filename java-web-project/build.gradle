@@ -1,0 +1,31 @@
+
+
+plugins {
+   
+    id 'java'
+	id 'eclipse-wtp'// 자바웹프로그램
+	id 'war'// 웹아카이브 파일(.war)을다루는 플러그인
+}
+
+repositories {
+   
+    jcenter()
+}
+
+dependencies {
+  
+    implementation 'com.google.guava:guava:26.0-jre'
+    compile group: 'org.mybatis', name: 'mybatis', version: '3.5.0'
+  
+    testImplementation 'junit:junit:4.12'
+       compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client', version: '2.4.0'
+       compile group: 'org.springframework', name: 'spring-context', version: '5.1.5.RELEASE'
+       compile group: 'org.mybatis', name: 'mybatis-spring', version: '2.0.0'
+       compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '2.6.0'
+       compile group: 'org.springframework', name: 'spring-jdbc', version: '5.1.5.RELEASE'
+       compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.9.2'
+       compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.2'
+       providedCompile group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
+       
+}
+

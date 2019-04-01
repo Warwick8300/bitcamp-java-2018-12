@@ -16,7 +16,7 @@ import com.eomcs.lms.service.MemberService;
 public class MemberUpdateServlet extends HttpServlet {
 
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
     request.setCharacterEncoding("UTF-8");
 

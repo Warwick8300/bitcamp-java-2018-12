@@ -43,7 +43,7 @@ public class PhotoBoardDetailServlet extends HttpServlet {
       out.println("<p>해당 사진을 찾을 수 없습니다.</p>");
       
     } else {
-      out.println("<form action='update'>");
+      out.println("<form action='update'  method='post'>");
       out.println("<table border='1'>");
       out.println("<tr>");
       out.println("  <th>번호</th>");

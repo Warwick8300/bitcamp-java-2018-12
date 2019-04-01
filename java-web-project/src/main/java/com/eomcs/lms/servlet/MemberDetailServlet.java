@@ -36,7 +36,7 @@ public class MemberDetailServlet extends HttpServlet {
     if (member == null) {
       out.println("<p>해당 번호의 회원이 없습니다.</p>");
     } else {
-      out.println("<form action='update'>");
+      out.println("<form action='update'  method='post'>");
       out.println("<table border='1'>");
       out.println("<tr>");
       out.println("  <th>번호</th>");

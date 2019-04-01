@@ -19,6 +19,7 @@ public class LessonUpdateServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     LessonService lessonService = InitServlet.iocContainer.getBean(LessonService.class);

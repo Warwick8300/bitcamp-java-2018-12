@@ -20,6 +20,7 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+    request.setCharacterEncoding("UTF-8");
 
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     PhotoBoardService photoBoardService = InitServlet.iocContainer.getBean(PhotoBoardService.class);

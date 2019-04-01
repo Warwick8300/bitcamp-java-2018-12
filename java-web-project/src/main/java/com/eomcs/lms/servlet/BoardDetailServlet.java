@@ -34,7 +34,7 @@ public class BoardDetailServlet extends HttpServlet {
       out.println("<p>해당 번호의 게시물이 없습니다.</p>");
       
     } else {
-      out.println("<form action='update'>");
+      out.println("<form action='update' method='post'>");
       out.println("<table border='1'>");
       out.printf("<tr>"
           + "<th>번호</th>"
@@ -52,7 +52,7 @@ public class BoardDetailServlet extends HttpServlet {
       out.println("</table>");
       out.println("<p><a href='list'>목록</a>"
           + " <a href='delete?no=" + board.getNo() + "'>삭제</a>"
-          + " <button type='submit' method='post'>변경</button>"
+          + " <button type='submit'>변경</button>"
           + "<p>");
       out.println("</form>");
     }

@@ -18,10 +18,11 @@ public class MemberDeleteServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    MemberService memberService = iocContainer.getBean(MemberService.class);    
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    MemberService memberService = iocContainer.getBean(MemberService.class);
+    
     int no = Integer.parseInt(request.getParameter("no"));
 
     if (memberService.delete(no) > 0) {

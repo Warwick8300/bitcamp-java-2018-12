@@ -20,8 +20,10 @@ public class BoardUpdateServlet extends HttpServlet {
       HttpServletRequest request, 
       HttpServletResponse response)
       throws ServletException, IOException {
+    
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     BoardService boardService = iocContainer.getBean(BoardService.class);
 
     Board board = new Board();

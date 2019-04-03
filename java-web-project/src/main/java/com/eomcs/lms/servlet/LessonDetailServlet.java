@@ -18,10 +18,11 @@ public class LessonDetailServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    LessonService lessonService = iocContainer.getBean(LessonService.class);
 
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    LessonService lessonService = iocContainer.getBean(LessonService.class);
 
     int no = Integer.parseInt(request.getParameter("no"));
 
@@ -30,7 +31,12 @@ public class LessonDetailServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>수업 조회</title></head>");
-    out.println("<body><h1>수업 조회</h1>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
+    out.println("<h1>수업 조회</h1>");
 
     if (lesson == null) {
       out.println("<p>해당 번호의 수입이 없습니다.</p>");

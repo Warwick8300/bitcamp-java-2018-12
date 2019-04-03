@@ -147,6 +147,7 @@
     <servlet-name>bitcamp.ex06.Servlet04</servlet-name>
     <url-pattern>/ex06/s4</url-pattern>
   </servlet-mapping>
+ 
 
 </web-app>
 

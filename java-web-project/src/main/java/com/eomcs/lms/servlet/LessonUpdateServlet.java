@@ -20,10 +20,11 @@ public class LessonUpdateServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    LessonService lessonService = iocContainer.getBean(LessonService.class);
 
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    LessonService lessonService = iocContainer.getBean(LessonService.class);
 
     Lesson lesson = new Lesson();
     lesson.setNo(Integer.parseInt(request.getParameter("no")));

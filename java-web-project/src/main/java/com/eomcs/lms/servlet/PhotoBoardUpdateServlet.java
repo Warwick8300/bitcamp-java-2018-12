@@ -36,9 +36,10 @@ public class PhotoBoardUpdateServlet extends HttpServlet {
       throws ServletException, IOException {
     
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
-    
+
     response.setContentType("text/html;charset=UTF-8");
 
     PhotoBoard board = new PhotoBoard();

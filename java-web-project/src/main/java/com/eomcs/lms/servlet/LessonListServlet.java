@@ -20,16 +20,22 @@ public class LessonListServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-    ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    LessonService lessonService = iocContainer.getBean(LessonService.class);
 
+    ServletContext sc = this.getServletContext();
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    LessonService lessonService = iocContainer.getBean(LessonService.class);
     List<Lesson> lessons = lessonService.list();
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>수업 목록</title></head>");
-    out.println("<body><h1>수업 목록</h1>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
+    out.println("<h1>수업 목록</h1>");
     out.println("<p><a href='add'>새 수업</a></p>");
     out.println("<table border='1'>");
     out.println("<tr><th>번호</th><th>수업</th><th>기간</th><th>총교육시간</th></tr>");

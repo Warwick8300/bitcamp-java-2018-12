@@ -19,10 +19,11 @@ public class MemberDetailServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    request.setCharacterEncoding("UTF-8");
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     MemberService memberService = iocContainer.getBean(MemberService.class);
+
     int no = Integer.parseInt(request.getParameter("no"));
 
     Member member = memberService.get(no);
@@ -30,7 +31,12 @@ public class MemberDetailServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head><title>회원 조회</title></head>");
-    out.println("<body><h1>회원 조회</h1>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
+    out.println("<h1>회원 조회</h1>");
 
     if (member == null) {
       out.println("<p>해당 번호의 회원이 없습니다.</p>");

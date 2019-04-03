@@ -38,10 +38,11 @@ public class PhotoBoardAddServlet extends HttpServlet {
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
 
-    
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    LessonService lessonService = iocContainer.getBean(LessonService.class);
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    LessonService lessonService = 
+        iocContainer.getBean(LessonService.class);
     
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
@@ -49,6 +50,10 @@ public class PhotoBoardAddServlet extends HttpServlet {
     out.println("<html>");
     out.println("<head><title>새 사진</title></head>");
     out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
     out.println("<h1>새 사진</h1>");
     out.println("<form action='add' method='post' enctype='multipart/form-data'>");
     out.println("<table border='1'>");
@@ -107,11 +112,10 @@ public class PhotoBoardAddServlet extends HttpServlet {
       throws ServletException, IOException {
 
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
-    
-    
-    
+
     PhotoBoard board = new PhotoBoard();
     board.setTitle(request.getParameter("title"));
     board.setLessonNo(Integer.parseInt(request.getParameter("lessonNo")));
@@ -137,7 +141,7 @@ public class PhotoBoardAddServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
     out.println("<html><head>" + "<title>사진 등록</title>"
-        + "<meta http-equiv='Refresh' content='3;url=add'>" + "</head>");
+        + "<meta http-equiv='Refresh' content='1;url=list'>" + "</head>");
     out.println("<body><h1>사진 등록</h1>");
 
     if (board.getLessonNo() == 0) {

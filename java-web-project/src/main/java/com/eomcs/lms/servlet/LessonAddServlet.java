@@ -27,6 +27,10 @@ public class LessonAddServlet extends HttpServlet {
     out.println("<htm>");
     out.println("<head><title>새 수업</title></head>");
     out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
     out.println("<h1>새 수업</h1>");
     out.println("<form action='add' method='post'>");
     out.println("<table border='1'>");
@@ -68,8 +72,10 @@ public class LessonAddServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     LessonService lessonService = iocContainer.getBean(LessonService.class);
 
     Lesson lesson = new Lesson();

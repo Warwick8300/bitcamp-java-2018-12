@@ -18,10 +18,11 @@ public class PhotoBoardDeleteServlet extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
+
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
     PhotoBoardService photoBoardService = iocContainer.getBean(PhotoBoardService.class);
-    
 
     int no = Integer.parseInt(request.getParameter("no"));
     

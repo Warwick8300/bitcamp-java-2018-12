@@ -22,8 +22,10 @@ public class BoardDetailServlet extends HttpServlet {
     
     // Spring IoC 컨테이너에서 BoardService 객체를 꺼낸다.
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
-    BoardService boardService = iocContainer.getBean(BoardService.class);
+    ApplicationContext iocContainer = 
+        (ApplicationContext) sc.getAttribute("iocContainer");
+    BoardService boardService = 
+        iocContainer.getBean(BoardService.class);
     
     int no = Integer.parseInt(request.getParameter("no"));
     
@@ -33,7 +35,12 @@ public class BoardDetailServlet extends HttpServlet {
     PrintWriter out = response.getWriter();
     
     out.println("<html><head><title>게시물 조회</title></head>");
-    out.println("<body><h1>게시물 조회</h1>");
+    out.println("<body>");
+    
+    // 헤더를 출력한다.
+    request.getRequestDispatcher("/header").include(request, response);
+    
+    out.println("<h1>게시물 조회</h1>");
     
     if (board == null) {
       out.println("<p>해당 번호의 게시물이 없습니다.</p>");

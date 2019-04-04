@@ -116,10 +116,9 @@ public class LoginServlet extends HttpServlet {
     
     // 세션에 로그인 사용자의 정보를 보관한다.
     session.setAttribute("loginUser", member);
-
+    
     // 로그인 성공하면 다시 메인 화면으로 보낸다.
     String refererUrl = (String) session.getAttribute(REFERER_URL);
-    System.out.println(refererUrl);
     if (refererUrl == null) {
       response.sendRedirect("../");
     } else {

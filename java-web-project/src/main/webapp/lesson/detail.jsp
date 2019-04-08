@@ -1,9 +1,7 @@
 <%@page import="com.eomcs.lms.domain.Lesson"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  Lesson lesson = (Lesson) request.getAttribute("lesson");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,6 +12,7 @@
   <jsp:include page="/header.jsp" />
 
   <h1>수업 조회(JSP)</h1>
+    <jsp:useBean id="lesson" scope="request" type="com.eomcs.lms.domain.Lesson"/>
 
   <%
     if (lesson == null) {
@@ -22,7 +21,6 @@
   <%
     } else {
   %>
-
   <form action='update' method='post'>
     <table border='1'>
       <tr>
@@ -55,11 +53,11 @@
       </tr>
     </table>
     <p>
-      <a href='list'>목록</a> <a href='delete?no=<%=lesson.getNo()%>'>삭제</a>
+      <a href='list'>목록</a> 
+      <a href='delete?no=<%=lesson.getNo()%>'>삭제</a>
       <button type='submit'>변경</button>
     <p>
   </form>
-
   <%
     }
   %>

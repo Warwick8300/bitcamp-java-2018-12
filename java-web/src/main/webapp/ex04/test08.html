@@ -5,17 +5,22 @@
 <title>test08</title>
 </head>
 <body>
-	<h1>파일 업로드 - 썸네일 이미지 만들기 </h1>
-
-	<p>업로드한 사진을 자른다
-	</p>
-	<form action="s8" method="post"
-enctype="multipart/form-data">
-		이름 : <input type="text" name="name"><br> 나이 : <input
-			type="number" name="age"><br> <input type="file"
-			name="photo"> <input type="submit" value="전송">
-	</form>
-	<p>현재 form의 데이터 인코딩 형식은 application/x-www-form-urlencoded 이다
-	즉 " 이름=값&이름=값&이름=값" 형식으로 서버에 데이터를 보낸다
-	문제는 첨부한 파일의 데이터는 보내지 못한다.</body>
+<h1>파일 업로드 - 썸네일 이미지 만들기</h1>
+<p>
+업로드 파일을 가지고 특정 크기의 썸네일 이미지 파일을 따로 생성한다.
+</p>
+<form action="s8" 
+      method="post"
+      enctype="multipart/form-data">
+  이름: <input type="text" name="name"><br>
+  나이: <input type="number" name="age"><br>
+  사진: <input type="file" name="photo"><br>
+  <input type="submit" value="전송">
+</form>
+</body>
 </html>
+
+
+
+
+

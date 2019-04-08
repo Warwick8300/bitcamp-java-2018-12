@@ -18,8 +18,7 @@ public class MemberDeleteServlet extends HttpServlet {
     throws ServletException, IOException {
 
     ServletContext sc = this.getServletContext();
-    ApplicationContext iocContainer = 
-        (ApplicationContext) sc.getAttribute("iocContainer");
+    ApplicationContext iocContainer = (ApplicationContext) sc.getAttribute("iocContainer");
     MemberService memberService = iocContainer.getBean(MemberService.class);
     
     int no = Integer.parseInt(request.getParameter("no"));
@@ -28,13 +27,9 @@ public class MemberDeleteServlet extends HttpServlet {
       response.sendRedirect("list");
       return;
     }
-    
-    // 오류 내용을 출력하는 JSP로 포워딩한다.
     request.setAttribute("error.title", "회원 삭제");
     request.setAttribute("error.content", "해당 번호의 회원이 없습니다.");
     
     request.getRequestDispatcher("/error.jsp").forward(request, response);
   }
-  
-  
 }

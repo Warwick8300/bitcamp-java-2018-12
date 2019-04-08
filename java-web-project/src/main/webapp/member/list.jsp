@@ -2,17 +2,19 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  List<Member> list = (List<Member>) request.getAttribute("list");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <title>회원 목록</title>
 </head>
 <body>
+
   <jsp:include page="/header.jsp" />
-  <h1>회원 목록(JSP)</h1>
+
+  <h1>회원 목록(JSP2)</h1>
+    <jsp:useBean id="list" scope="request" type="java.util.List<Member>"/>
+  
   <p>
     <a href='add'>새 회원</a>
   </p>
@@ -24,6 +26,7 @@
       <th>전화</th>
       <th>가입일</th>
     </tr>
+
     <%
       for (Member member : list) {
     %>
@@ -38,13 +41,14 @@
       }
     %>
   </table>
-  
+
   <form action='search'>
-  <input type='text' name='keyword'>
+    <input type='text' name='keyword'>
     <button type='submit'>검색</button>
-   </form>
+  </form>
 </body>
 </html>
+
 
 
 

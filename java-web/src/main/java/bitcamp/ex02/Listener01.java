@@ -1,13 +1,7 @@
 package bitcamp.ex02;
 
-import java.io.IOException;
-import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 
 // 서블릿 컨테이너가 관리하는 컴포넌트
 // => 서블릿, 필터, 리스너
@@ -41,15 +35,14 @@ public class Listener01 implements ServletContextListener {
   
   @Override
   public void contextInitialized(ServletContextEvent sce) {
-    System.out.println("Listener01.contextInitialized");
-    
+    // 웹 애플리케이션이 시작될 때 호출된다.
+    System.out.println("Listener01.contextInitialized()");
   }
   
   @Override
   public void contextDestroyed(ServletContextEvent sce) {
-    System.out.println("Listener01.contextDestroyed");
-
-    
+    // 웹 애플리케이션이 종료될 때 호출된다.
+    System.out.println("Listener01.contextDestroyed()");
   }
 }
 

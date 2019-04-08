@@ -1,4 +1,4 @@
-// 서블릿 초기화 파라미터 - 애노테이션으로 설정하기
+// 서블릿 초기화 파라미터 - web.xml에서 설정하기
 package bitcamp.ex06;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 // 서블릿이 사용할 값을 DD 설정으로 지정할 수 있다.
-// 
+// => web.xml 에 지정하였다.
 @SuppressWarnings("serial")
 public class Servlet04 extends HttpServlet {
   

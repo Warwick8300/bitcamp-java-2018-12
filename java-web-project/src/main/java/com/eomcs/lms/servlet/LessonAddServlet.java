@@ -21,8 +21,6 @@ public class LessonAddServlet extends HttpServlet {
       throws ServletException, IOException {
 
     response.setContentType("text/html;charset=UTF-8");
-    
-    // 헤더를 출력한다.
     request.getRequestDispatcher("/lesson/form.jsp").include(request, response);
   }
 

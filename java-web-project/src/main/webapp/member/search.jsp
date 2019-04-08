@@ -1,22 +1,26 @@
-<%@page import="com.eomcs.lms.domain.Member"%>
 <%@page import="java.util.List"%>
+<%@page import="com.eomcs.lms.domain.Member"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  List<Member> list = (List<Member>) request.getAttribute("list");
-%>
 <!DOCTYPE html>
 <html>
 <head>
-<title>회원 찾기</title>
+<title>회원 검색</title>
 </head>
 <body>
   <jsp:include page="/header.jsp" />
+  <jsp:useBean id="list" scope="request" type="java.util.List<Member>"/>
 
+  <h1>회원 검색(JSP)</h1>
+  <table border='1'>
+    <tr>
+      <th>번호</th>
+      <th>이름</th>
+      <th>이메일</th>
+      <th>전화</th>
+      <th>가입일</th>
+    </tr>
 
-<h1>회원 검색(JSP)!</h1>
-<table border='1'>
-<tr><th>번호</th><th>이름</th><th>이메일</th><th>전화</th><th>가입일</th></tr>
     <%
       for (Member member : list) {
     %>
@@ -31,10 +35,8 @@
       }
     %>
   </table>
-      <p><a href='list'>목록</a></p>
+  <p>
+    <a href='list'>목록</a>
+  </p>
 </body>
 </html>
-
-
-
-

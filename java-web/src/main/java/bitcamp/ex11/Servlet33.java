@@ -1,4 +1,4 @@
-// 세션(session) 무효화 시키기 - 값 꺼내기
+// 세션(session) 무효화시키기 - 세션 무효화하기
 package bitcamp.ex11;
 
 import java.io.IOException;
@@ -13,19 +13,19 @@ import javax.servlet.http.HttpSession;
 @WebServlet("/ex11/s33")
 @SuppressWarnings("serial")
 public class Servlet33 extends HttpServlet {
-
-  
   
   @Override
-  protected void doGet(HttpServletRequest request, HttpServletResponse response)
+  protected void doGet(
+      HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException {
-
     
-
     HttpSession session = request.getSession();
-    session.invalidate();
+    session.invalidate(); // 세션을 무효화시킨다.
+    
     response.setContentType("text/plain;charset=UTF-8");
     PrintWriter out = response.getWriter();
-    out.println("세션무효화");
+    out.println("세션을 무효화시켰습니다.");
   }
 }
+
+

@@ -29,6 +29,7 @@ public class LessonDeleteServlet extends HttpServlet{
       response.sendRedirect("list");
       return;
     }
+    
     // 오류 내용을 출력하는 JSP로 포워딩한다.
     request.setAttribute("error.title", "수업 삭제");
     request.setAttribute("error.content", "해당 번호의 수업이 없습니다.");

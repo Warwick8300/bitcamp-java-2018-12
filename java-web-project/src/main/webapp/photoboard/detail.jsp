@@ -2,61 +2,65 @@
 <%@page import="com.eomcs.lms.domain.Lesson"%>
 <%@page import="java.util.List"%>
 <%@page import="com.eomcs.lms.domain.PhotoBoard"%>
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
   trimDirectiveWhitespaces="true"%>
-<%
-  PhotoBoard photoBoard = (PhotoBoard) request.getAttribute("board");
-  List<Lesson> list = (List<Lesson>) request.getAttribute("list");
-%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>수업 사진 조회</title>
+<title>사진 조회</title>
 </head>
 <body>
 
+
   <jsp:include page="/header.jsp" />
 
-  <h1>수업 사진 조회(JSP)</h1>
+  <h1>사진 조회</h1>
+  <jsp:useBean id="list" scope="request" type="java.util.List<Lesson>" />
+  <jsp:useBean id="files" scope="request" type="java.util.List<PhotoFile>" />
+  <jsp:useBean id="board" scope="request" type="com.eomcs.lms.domain.PhotoBoard" />
 
   <%
-    if (photoBoard == null) {
+    if (board == null) {
   %>
-  <p>해당 회원이 없습니다</p>
+  <p>해당 사진을 찾을 수 없습니다.</p>
   <%
     } else {
   %>
-
   <form action='update' method='post' enctype='multipart/form-data'>
     <table border='1'>
       <tr>
         <th>번호</th>
-        <td><input name='no' value='<%=photoBoard.getNo()%>' readonly></td>
+        <td><input name='no' value='<%=board.getNo()%>' readonly></td>
       </tr>
       <tr>
         <th>제목</th>
-        <td><input name='title' value='<%=photoBoard.getTitle()%>'></td>
+        <td><input name='title' value='<%=board.getTitle()%>'></td>
       </tr>
       <tr>
         <th>등록일</th>
-        <td><%=photoBoard.getCreatedDate()%></td>
+        <td><%=board.getCreatedDate()%></td>
       </tr>
       <tr>
         <th>조회수</th>
-        <td><%=photoBoard.getViewCount()%></td>
+        <td><%=board.getViewCount()%></td>
       </tr>
       <tr>
         <th>수업</th>
         <td><select name='lessonNo'>
+
             <%
-          for (Lesson lesson : list) {
-        %>
-            <option value='<%=lesson.getNo()%>'<%=photoBoard.getLessonNo() == lesson.getNo() ? "selected" : ""%>><%=lesson.getTitle()%>(<%=lesson.getStartDate()%> ~ <%=lesson.getEndDate()%>)
+              for (Lesson lesson : list) {
+            %>
+            <option value='<%=lesson.getNo()%>'
+              <%=board.getLessonNo() == lesson.getNo() ? "selected" : ""%>><%=lesson.getTitle()%>(<%=lesson.getStartDate()%>
+              ~
+              <%=lesson.getEndDate()%>)
             </option>
             <%
               }
             %>
+
         </select></td>
       </tr>
       <tr>
@@ -86,25 +90,21 @@
         <th>사진</th>
         <td>
           <%
-            for (PhotoFile photoFile : photoBoard.getFiles()) {
-          %> <img src='../upload/photoboard/<%=photoFile.getFilePath()%>' style='height: 80px'>
-
-          <%
-            }
-          %>
+            for (PhotoFile file : files) {
+          %> <img src='../upload/photoboard/<%=file.getFilePath()%>' style='height: 80px'> <%
+   }
+ %>
         </td>
       </tr>
     </table>
+
     <p>
-      <a href='list'>목록</a> <a href='delete?no=<%=photoBoard.getNo()%>'>삭제</a>
+      <a href='list'>목록</a><a href='../'>전체 목록</a> <a href='delete?no=<%=board.getNo()%>'>삭제</a>
       <button type='submit'>변경</button>
     <p>
   </form>
-
-
   <%
     }
   %>
-
 </body>
 </html>

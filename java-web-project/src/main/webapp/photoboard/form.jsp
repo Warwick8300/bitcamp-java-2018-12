@@ -1,25 +1,21 @@
-<%@page import="com.eomcs.lms.domain.Lesson"%>
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head><title>새 사진</title></head>
     <body>
 
-    <h1>새 사진</h1>
+    <h1>새 사진(JSP2 + EL + JSTL)</h1>
     <form action='add' method='post' enctype='multipart/form-data'>
     <table border='1'>
     <tr>
       <th>수업</th>
       <td><select name='lessonNo'>
           <option value='0'>수업을 선택하세요</option>
-      <jsp:useBean id="list" scope="request" type="java.util.List<Lesson>"/>
-    
-    <%for (Lesson lesson : list) { %>
-      <option value=<%=lesson.getNo()%>><%=lesson.getTitle() %></option>
-    <%} %>
-    
+        <c:forEach items="${lessons}" var="lesson">
+          <option value="${lesson.no}">${lesson.title}</option>
+        </c:forEach>
       </select></td>
     </tr>
     <tr>

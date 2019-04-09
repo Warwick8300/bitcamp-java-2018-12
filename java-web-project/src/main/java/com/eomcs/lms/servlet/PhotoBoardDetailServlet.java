@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import com.eomcs.lms.domain.Lesson;
 import com.eomcs.lms.domain.PhotoBoard;
-import com.eomcs.lms.domain.PhotoFile;
 import com.eomcs.lms.service.LessonService;
 import com.eomcs.lms.service.PhotoBoardService;
 
@@ -32,18 +31,12 @@ public class PhotoBoardDetailServlet extends HttpServlet {
         iocContainer.getBean(LessonService.class);
     int no = Integer.parseInt(request.getParameter("no"));
 
-    
-
     PhotoBoard board = photoBoardService.get(no);
     List<Lesson> lessons = lessonService.list();
-    List <PhotoFile> files = board.getFiles();
     request.setAttribute("board", board);
-    request.setAttribute("list", lessons);
-    request.setAttribute("files", files);
-    response.setContentType("text/html;charset=UTF-8");
+    request.setAttribute("lessons", lessons);
     
-    // JSP의 실행을 포함시킨다.
-    request.getRequestDispatcher("/photoboard/detail.jsp").include(request, response);
+    // 뷰 컴포넌트의 URL을 ServletRequest 보관소에 저장한다.
+    request.setAttribute("viewUrl", "/photoboard/detail.jsp");
   }
-
 }

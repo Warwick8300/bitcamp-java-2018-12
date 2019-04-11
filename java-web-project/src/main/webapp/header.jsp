@@ -2,8 +2,8 @@
   trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="contextRootPath" value="${pageContext.servletContext.contextPath}"/>
-<header>
-  <img src="http://bitcamp.co.kr/img/logo.jpg" style="height:50px;">
+<header><a href='http://localhost:8080/java-web-project/'>
+  <img  src="http://bitcamp.co.kr/img/logo.jpg" style="height:50px;"></a>
 <c:if test="${empty loginUser}">
   <a href='${contextRootPath}/app/auth/form'>로그인</a>
 </c:if>

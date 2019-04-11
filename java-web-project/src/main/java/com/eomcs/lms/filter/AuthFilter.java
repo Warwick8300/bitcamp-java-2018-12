@@ -35,10 +35,9 @@ public class AuthFilter implements Filter {
     HttpServletRequest httpReq = (HttpServletRequest) request;
     HttpServletResponse httpResp = (HttpServletResponse) response;
     
-    // /app/* URL에 대해서 적용하기 때문에 서블릿 경로를 검사하면 안된다.
-    //String servletPath = httpReq.getServletPath(); // "/app
-    String pathInfo = httpReq.getPathInfo(); // ex) "/board/list
-    
+    // /app/* URL에 대해서 적용하기 때문에 서블릿 경로를 검사해서는 안된다.
+    //String servletPath = httpReq.getServletPath(); // "/app"
+    String pathInfo = httpReq.getPathInfo(); // ex) "/board/list"
     
     if (pathInfo.endsWith("add")
         || pathInfo.endsWith("update")

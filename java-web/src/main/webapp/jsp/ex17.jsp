@@ -18,8 +18,8 @@
 <%-- id가 가리키는 객체가 보관소에 없을 때 
      class 속성에 지정된 타입의 인스턴스를 생성한다.
      그래서 class 속성에는 인터페이스나 추상 클래스를 지정할 수 없다.
-     왜? 인터페이스나 추상클래스는 인스턴스를 생성할 수 없기 때문이다.
-<jsp:useBean id="list" class="java.util.List" scope="page"/>--%>
+     왜? 인터페이스나 추상클래스는 인스턴스를 생성할 수 없기 때문이다.--%>
+<jsp:useBean id="list" class="java.util.List" scope="page"/>
 <%-- 자바코드로 표현해보면,
   java.util.List list = 
      (java.util.List) pageContext.getAttribute("list");
@@ -27,7 +27,7 @@
     list = new java.util.List();
     pageContext.setAttribute("list", list);
   }
- 
+ --%>
 
 <%
 // 제네릭 문법을 사용하지 못했기 때문에 list의 타입은 java.util.ArrayList이다.
@@ -35,7 +35,7 @@
 for (Object n : list) {
   out.println(n + "<br>");
 }
-%>--%>
+%>
 
 </body>
 </html>

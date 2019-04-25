@@ -29,13 +29,15 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
   
   // 비지니스 객체에서 메서드 이름은 가능한 업무 용어를 사용한다.
   @Override
-  public List<PhotoBoard> list(int lessonNo, String searchWord) {
-    
+  public List<PhotoBoard> list(int pageNo, int pageSize,int lessonNo, String searchWord) {
+    HashMap<String,Object> params = new HashMap<>();
+    params.put("size", pageSize);
+    params.put("rowNo", (pageNo - 1) * pageSize);
     if (lessonNo <= 0 && searchWord == null) {
       return boardDao.findAll(null);
       
     } else {
-      HashMap<String,Object> params = new HashMap<>();
+      
       if (lessonNo > 0) {
         params.put("lessonNo", lessonNo);
       }
@@ -101,6 +103,12 @@ public class PhotoBoardServiceImpl implements PhotoBoardService {
     // 데이터를 지울 때는 자식 테이블의 데이터부터 지워야 한다.
     fileDao.deleteByPhotoBoardNo(no);
     return boardDao.delete(no);
+  }
+  
+  @Override
+  public int size() {
+    // 전체 게시물의 개수
+    return boardDao.countAll();
   }
 }
 

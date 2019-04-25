@@ -4,11 +4,14 @@
 <html>
 <head>
 <title>새 회원</title>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="${contextRootPath}/css/common.css">
 </head>
 <body>
 
-  <jsp:include page="../header.jsp" />
+<jsp:include page="../header.jsp"/>
 
+<div class="container">
   <h1>새 회원</h1>
   <form action='add' method='post' enctype='multipart/form-data'>
     <table border='1'>

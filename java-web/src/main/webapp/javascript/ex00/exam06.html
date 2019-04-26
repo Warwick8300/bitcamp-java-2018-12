@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>exam</title>
+
+</head>
+<body>
+  <h1>6.AJAX</h1>
+  <div id="d1"></div>
+  <button id="btn1">확인</button>
+  <script>
+  var tag1 = document.getElementById("btn1");
+  tag1.onclick = function() {
+    var xhr = new XMLHttpRequest;
+    xhr.open("GET",exam06.jsp)
+     
+  var tag2 = document.getElementById("p1");
+  tag2.innerHTML = "비트캠프!";
+
+      };
+    </script>
+</body>
+</html>

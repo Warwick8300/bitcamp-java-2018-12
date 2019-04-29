@@ -53,6 +53,22 @@ for (var score of scores) {
     		score.sum(), score.aver());
 }
 
+
+
+// 생성자로 쓰이는 함수를 그냥 호출 한다면?
+//var obj = createSore("호오라",30,20,30);
+// 객체 없이 createScore()를 호출하면
+// this 변수는 undefined 상태가 되어 내부에서 실행 오류가 발생할 것이다.
+// 자바 스크립트는 컴파일 방식이 아니기 떄문에
+//createScoe() 처럼 new 를 통해서만 호출하도록
+// 강제할 방법이 없다.
+// 대신에 개발자 사이에 암묵저긍로 지키는 관례가 있다.
+// 생성자로 쓰이는 함수는 이름을 대문자로 시작하게 짓는다.
+// 그래서 다른 개발작 바로 알아볼 수 있도록 한다.
+
+// 1. 빈객체생성
+// 2 object ()호출
+
 console.log(scores[0]);
 console.log(scores[1]);
 console.log(scores[2]);

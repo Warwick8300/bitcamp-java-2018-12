@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>ex06</title>
+    <style>
+        body,
+        div {
+            border: 1px solid red;
+            padding: 30px;
+        }
+
+        button {
+            padding: 30px;
+        }
+        table {
+            width: 600px;
+        }
+        tbody tr:hover{
+            background-color: aliceblue;
+            color: white;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>이벤트 - 이벤트 전파 막기</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>제목</th>
+                <th>작성자</th>
+                <th>등록일</th>
+                <th>조회수</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">1</th>
+                <td><a href='#'>제.</a></td>
+                <td>홍길동</td>
+                <td>2019-04-25</td>
+                <td>5</td>
+            </tr>
+            <tr>
+                    <th scope="row">2</th>
+                    <td><a href='#'>제목</a></td>
+                    <td>홍길동</td>
+                    <td>2019-04-25</td>
+                    <td>5</td>
+                </tr>
+                <tr>
+                        <th scope="row">3</th>
+                        <td><a href='#'>제목입니다.</a></td>
+                        <td>홍길동</td>
+                        <td>2019-04-25</td>
+                        <td>5</td>
+                    </tr>
+        </tbody>
+
+
+                </div>
+                <script>
+                    "use strict"
+                   // var el = document.querySelectorAll("tbody a");
+                   var el = document.querySelectorAll("tbody tr");
+                    for (var e of el) {
+                        e.addEventListener("click", function (e){
+                            window.alert("제목 눌렀음!");
+
+                        });
+                    }
+                </script>
+</body>
+
+</html>

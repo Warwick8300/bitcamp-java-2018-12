@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ex07</title>
+</head>
+<body>
+<h1>AJAX - readyState와 status</h1>
+<form >
+<input type ="text" id = "a"> + <input type+="text" id="b">
+<button type="button" id="btn1">=</button><br>
+<input id="r" type="text">
+<button type="reset">초기화</button>
+</form>
+<script>
+"use strict"
+// 서버에서 응답을 완료했다고 해서 그 응답 결과를 가지고 작업할 문제는 아니다. 
+// 왜?
+// => 서버에서 실행 중에 오류가 발생하더라도 응답을 하기 때문이다.
+// => 즉 서버가 응답한 결과를 가지고, 웹브라우저에서 작업을 수행하기 전에
+//    정상적인 응답인지 검사해야 한다.
+//       
+//
+
+var a = document.querySelector("#a");
+var b = document.querySelector("#b");
+var r = document.querySelector("#r");
+
+document.querySelector("#btn1").onclick = () => {
+    var xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = () => {
+        if (xhr.readyState == 4) {
+          if(xhr.status ==200){
+            r.value = xhr.responseText;
+          }else {
+            alert("실행오류 입니다");
+          }
+          
+        }
+    };
+    
+    xhr.open("GET", "test4.jsp?a=" + a.value + "&b=" +b.value, true);
+    xhr.send();
+    console.log("send() 리턴함.");
+};
+
+</script>
+</body>
+</html>
+
+
+
+
+

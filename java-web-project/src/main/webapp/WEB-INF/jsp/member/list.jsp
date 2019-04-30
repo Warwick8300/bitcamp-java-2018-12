@@ -38,10 +38,11 @@
   </table>
 </div>
 
-  <form action='search'>
-   <input class="form-control mr-sm-2" id="keyword" name='keyword'>
-    <button  class="btn btn-primary btn-sm" type='submit'>검색</button>
-  </form>
+ 
+  <form class="form-inline my-2 my-lg-0" action='search'>
+        <input class="form-control mr-sm-2" type="search" placeholder="검색" aria-label="검색" id="keyword" name='keyword'>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+      </form>
  
  <nav aria-label="목록 페이지 이동">
   <ul class="pagination justify-content-center">

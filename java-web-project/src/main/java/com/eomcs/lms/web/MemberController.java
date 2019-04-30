@@ -1,6 +1,5 @@
 package com.eomcs.lms.web;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
@@ -53,10 +52,10 @@ public class MemberController {
   }
   
   @GetMapping("{no}")
-  public String detail(@PathVariable int no, Map<String,Object> map) throws Exception {
+  public String detail(@PathVariable int no,  Model model) throws Exception {
 
     Member member = memberService.get(no);
-    map.put("member", member);
+    model.addAttribute("member", member);
     return "member/detail";
   }
   
@@ -92,10 +91,10 @@ public class MemberController {
   @GetMapping("search")
   public void search(
       @RequestParam("keyword") String keyword,
-      Map<String,Object> map) throws Exception {
+      Model model) throws Exception {
    
     List<Member> members = memberService.list(keyword,0,0);
-    map.put("list", members);
+    model.addAttribute("list", members);
     
   }
 

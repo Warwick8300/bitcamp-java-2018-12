@@ -2,7 +2,6 @@ package com.eomcs.lms.web;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import javax.servlet.ServletContext;
 import javax.servlet.http.Part;
@@ -29,9 +28,9 @@ public class PhotoBoardController {
   @Autowired ServletContext servletContext;
   
   @GetMapping("form")
-  public void form(Map<String,Object> map) {
+  public void form(Model model) {
     List<Lesson> lessons = lessonService.list(0,0);
-    map.put("lessons", lessons);
+    model.addAttribute("lessons", lessons);
   }
   
   @PostMapping("add")
@@ -81,12 +80,12 @@ public class PhotoBoardController {
   }
   
   @GetMapping("{no}")
-  public String detail(@PathVariable int no, Map<String,Object> map) throws Exception {
+  public String detail(@PathVariable int no,Model model) throws Exception {
     
     PhotoBoard board = photoBoardService.get(no);
     List<Lesson> lessons = lessonService.list(0,0);
-    map.put("board", board);
-    map.put("lessons", lessons);
+    model.addAttribute("board", board);
+    model.addAttribute("lessons", lessons);
     
     return "photoboard/detail";
   }
@@ -121,19 +120,15 @@ public class PhotoBoardController {
   }
   
   @GetMapping("search")
-  public void search(String lessonNo, String keyword, Map<String,Object> map) throws Exception {
+  public void search(@RequestParam(defaultValue="0") int lessonNo, String keyword, Model model) { 
     
-    int searchlessonNo = 0;
-    if (lessonNo.length() > 0) {
-      searchlessonNo = Integer.parseInt(lessonNo);
-    }
-    
+   
     String searchWord = null;
     if (keyword.length() > 0)
       searchWord = keyword;
 
-    List<PhotoBoard> boards = photoBoardService.list(searchlessonNo, searchWord, 0 , 0);
-    map.put("list", boards);
+    List<PhotoBoard> boards = photoBoardService.list(lessonNo, searchWord,0,0);
+    model.addAttribute("list", boards);
     
   }
   

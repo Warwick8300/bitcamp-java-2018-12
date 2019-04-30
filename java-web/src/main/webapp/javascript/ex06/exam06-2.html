@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>ex06</title>
+
+</head>
+<body>
+<h1>이벤트 - form의 submit 동작을 중단시키기</h1>
+<p> form의 submit 버튼을 클릭하면 서버에 요청을 한다.</p>
+<form>
+<button >전송</button>
+</form>
+
+<form>
+<button onsubmit="return false" >전송막기</button>
+</form>
+<form>
+<button id="form2" >전송막기2</button>
+</form>
+<form>
+        <button id="form3" >전송막기3</button>
+        </form>
+
+        <form>
+                <button type="button" id="form4" >전송막기4</button>
+                </form>
+             
+
+<script>
+document.querySelector("#form2").onsubmit= () => {
+    "return false";
+}
+document.querySelector("#form3").onsubmit= (e) => {
+    e.preventDefault();
+}
+
+</script>
+</body>
+</html>
+
+
+
+
+

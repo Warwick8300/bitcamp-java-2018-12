@@ -42,10 +42,13 @@
       </table>
     </div>
 
-    <form action='search'>
-      수업번호: <input type='text' name='lessonNo'> 검색어: <input type='text' name='keyword'>
-      <button type='submit'>검색</button>
-    </form>
+    
+    
+    <form class="form-inline my-2 my-lg-0" action='search'>
+       <input class="form-control mr-sm-2" type="search" placeholder="수업번호" aria-label="검색" id="lessonNo" name='lessonNo'><br>
+       <input class="form-control mr-sm-2" type="search" placeholder="검색어" aria-label="검색" id="keyword" name='keyword'>
+ <button class="btn btn-outline-success my-2 my-sm-0" type="submit">검색</button>
+      </form>
     <br>
   <nav aria-label="목록 페이지 이동">
   <ul class="pagination justify-content-center">

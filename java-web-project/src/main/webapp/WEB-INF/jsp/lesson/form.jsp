@@ -4,9 +4,7 @@
 <html>
 <head>
 <title>새 수업</title>
-<link rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextRootPath}/css/common.css">
+<jsp:include page="../commonCss.jsp" />
 </head>
 <body>
 

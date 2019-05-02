@@ -5,9 +5,7 @@
 <html>
 <head>
 <title>사진 목록</title>
-<link rel="stylesheet"
-  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-<link rel="stylesheet" href="${contextRootPath}/css/common.css">
+<jsp:include page="../commonCss.jsp" />
 </head>
 <body>
   <jsp:include page="../header.jsp" />

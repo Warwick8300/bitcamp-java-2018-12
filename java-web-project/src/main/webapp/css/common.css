@@ -1,12 +1,18 @@
 @charset "UTF-8";
 
 body {
-	font-size:small;
+  font-size: small;
 }
 
-h1 {
-	/* border: 1px solid red; */
-	text-align: center;
+body > header {
+  min-height: 80px;
+}
+
+.container > h1 {
+  height: 30 px;
+  /*  border:1px solid red; */
+  /* text-align: center; */
+  margin: 20px;
 }
 
 h6 {
@@ -14,14 +20,17 @@ h6 {
 }
 
 .bit-list {
-	min-height: 200px;
+  min-height: 200px;
 }
 
 div.container {
   width: 800px;
 }
 
+.bit-invisible{
+  display:none;
+}
 
 #bit-login-state {
-	margin: 0px 10px;
+  margin: 0px 10px;
 }

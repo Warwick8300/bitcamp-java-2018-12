@@ -1,6 +1,7 @@
 package com.eomcs.lms.domain;
 import java.io.Serializable;
 import java.sql.Date;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class Board implements Cloneable, Serializable {
   private static final long serialVersionUID = 1L;
@@ -36,6 +37,7 @@ public class Board implements Cloneable, Serializable {
   public Date getCreatedDate() {
     return createdDate;
   }
+  @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "yyyy-MM-dd")
   public void setCreatedDate(Date createdDate) {
     this.createdDate = createdDate;
   }
